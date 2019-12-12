@@ -1,0 +1,34 @@
+
+@charset "utf-8";
+
+
+//colors
+@import "partials/_color.scss";
+
+@import "~bulma/bulma";
+
+//Responsive
+@import "partials/_responsive.scss";
+
+//reuse
+@import "partials/_reuse.scss";
+
+/********************************************************************************************************
+My utilitie classes and some minor hacking, Maybe am horrible if sound awful educate me
+*********************************************************************************************************/
+
+.is-bold {
+	font-weight: bold;
+}
+
+.is-active
+{
+  	border-right: 4px solid #209cee;
+}
+
+
+
+
+
+
+
