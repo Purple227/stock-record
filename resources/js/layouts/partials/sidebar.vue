@@ -47,9 +47,31 @@
 
  <center>
 
-<span class="icon has-text-info menu">
-<i class="fas fa-bars has-text-dark fa-lg "></i> 
-</span> 
+<div class="dropdown menu"  v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+      <span class="icon">
+        <i class="fas fa-bars has-text-black fa-lg" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+      <a href="#" class="dropdown-item">
+        Dropdown item
+      </a>
+      <a class="dropdown-item">
+        Other dropdown item
+      </a>
+      <a href="#" class="dropdown-item is-active">
+        Active dropdown item
+      </a>
+      <a href="#" class="dropdown-item">
+        Other dropdown item
+      </a>
+    </div>
+  </div>
+</div>
 
  <div class="icons-wrapper">
 

@@ -12,7 +12,7 @@
     <div class="level-item level-left">
       <div>
         <p class="control">
-          <button class="button is-info">
+          <button class="button is-info is-rounded">
             <span class="icon is-small">
               <i class="fas fa-calendar has-text-white"></i>
             </span>

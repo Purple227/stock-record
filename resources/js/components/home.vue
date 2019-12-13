@@ -1,7 +1,6 @@
 <style lang="scss">
   @import "../../sass/bulma.scss";
 
-
 </style>
 
 
@@ -51,7 +50,7 @@
   		<h1 class="title is-bold has-text-black">218</h1>
   	</div>
 
-
+      <button class="button is-rounded is-info is-pulled-right"> Download Full Report </button>
 
   </div>  <!-- Third column tag end -->
 
