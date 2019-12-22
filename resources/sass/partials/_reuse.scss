@@ -1,0 +1,26 @@
+
+@import '_color';
+
+.is-bold {
+	font-weight: bold;
+}
+
+.is-active
+{
+  	border-right: 4px solid $light-blue;
+}
+
+.center
+{
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center;
+}
+
+
+@mixin position($size, $position) {
+  position: $position;
+  top: $size;
+}
+
+

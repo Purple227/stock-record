@@ -1,19 +1,16 @@
-<style lang="scss">
-  @import "../../sass/bulma.scss";
+<style lang="scss" scoped>
 
+@charset "utf-8";
+
+@import "~bulma/bulma";
+@import "~animate.css/animate";
+@import "../../sass/partials/_reuse.scss";
+@import "../../sass/partials/_color.scss";
 
 .second_column
-{
-	background-color: #f9f9f9;
+	{
+	background-color: $light-grey;
 }
-
-body {
-  display:flex; 
-  flex-direction:column; 
-  justify-content:center;
-  min-height:100vh;
-}
-
 
 </style>
 

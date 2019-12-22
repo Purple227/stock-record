@@ -1,40 +1,35 @@
-<style lang="scss">
-@import "../../../sass/bulma.scss";
+<style lang="scss" scoped>
+
+@charset "utf-8";
+
+@import "~bulma/bulma";
+
+@import "../../../sass/partials/_reuse.scss";
+
+@import "../../../sass/partials/_responsive.scss";
 
 .icons-wrapper {
-  display:flex; 
-  flex-direction:column; 
-  justify-content:center;
-  min-height:50vh;
-  position: relative;
+  @extend .center;
 }
 
-.padding
+.sticky
 {
-	padding: auto;
-
-	@include tablet_mobile
-	{
-		padding-right: 13px;
-	}
+  @include position(0px, sticky);
 }
 
-
-.menu
+.dropdown
 {
 	margin-bottom: 65%;	
-	margin-left: 30%;
+}
+
+.button
+{
+  margin-left: 20%;
 }
 
 .icon_spacing
 {	
 	margin: 50%;
-}
-
-.sticky
-{
-  position: sticky;
-  top: 0px;
 }
 
 
@@ -47,7 +42,7 @@
 
  <center>
 
-<div class="dropdown menu"  v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
+<div class="dropdown"  v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
       <span class="icon">

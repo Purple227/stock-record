@@ -1,6 +1,10 @@
-<style lang="scss">
+<style lang="scss" scoped>
 
-@import "../../../sass/bulma.scss";
+@charset "utf-8";
+
+@import "~bulma/bulma";
+@import "../../../sass/partials/_reuse.scss";
+
 
 </style>
 

@@ -11,8 +11,20 @@
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<!-- Stylesheets -->
-	<link href="{{ mix('css/utilities.css') }}" rel="stylesheet">
+	<link href="{{ mix('css/fontawesome.css') }}" rel="stylesheet">
+
+
+	<style type="text/css">
+		body
+		{
+			background-color: black;
+			display:flex; 
+			flex-direction:column; 
+			justify-content:center;
+			position: relative;
+			min-height: 100vh;
+		}
+	</style>
 
 </head>
 
