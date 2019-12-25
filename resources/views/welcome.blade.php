@@ -24,11 +24,12 @@
 			position: relative;
 			min-height: 100vh;
 		}
+
 	</style>
 
 </head>
 
-<body>
+<body class="is-rounded">
 	<div id="app">
 	<app> </app>
 	</div>

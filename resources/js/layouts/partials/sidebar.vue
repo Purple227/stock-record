@@ -44,7 +44,7 @@
 
 <div class="dropdown"  v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
   <div class="dropdown-trigger">
-    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+    <button class="button is-rounded" aria-haspopup="true" aria-controls="dropdown-menu">
       <span class="icon">
         <i class="fas fa-bars has-text-black fa-lg" aria-hidden="true"></i>
       </span>

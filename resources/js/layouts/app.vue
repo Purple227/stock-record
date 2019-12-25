@@ -10,6 +10,8 @@
 .second_column
 	{
 	background-color: $light-grey;
+	border: 2px solid $light-grey;
+    border-radius: 10px;
 }
 
 </style>
@@ -31,16 +33,12 @@
 
   </div>   <!-- Second column tag end -->
 
-
 </div>   <!-- Columns wrapper -->
-
-
 
 </div>  <!-- Container tag close -->
 
-
-
 </template>
+
 
 <script>
 
