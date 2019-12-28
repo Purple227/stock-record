@@ -11,6 +11,16 @@
 	cursor: pointer;
 }
 
+.card-footer-item, .fa-trash
+{
+	cursor: pointer;
+}
+
+.sticky
+{
+  @include position(0px, sticky);
+}
+
 </style>
 
 
@@ -47,12 +57,13 @@
 										</thead>
 
 										<tbody>
-											<tr>
-												<th>1</th>
+											<tr v-for="(inventoryData, index) in inventoryDatas" :key="index">
+												<th> {{ index+1 }}</th>
 
-												<td>    <input class="input" type="number" placeholder="Type here"> </td>
-												<td>    <input class="input" type="number" placeholder="Type here"> </td>					
-												<td>    <input class="input" type="number" placeholder="Type here"> </td>											
+												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.weight"> </td>
+												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.moisture"> </td>				
+												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.discount"> </td>	
+												<td> <i class="fas fa-trash has-text-info" v-on:click="removeinventoryData(index);"></i> </span></td>										
 											</tr>
 										</tbody>
 
@@ -60,14 +71,14 @@
 
 								</form>  <!-- Form tag close -->
 
-								<table class="table is-bordered">
+								<table class="table is-bordered is-centered ">
 
 									<thead>
 										<tr>
-											<th><abbr title="Serial Number">S/N</abbr></th>
-											<th> Total </th>
-											<th> Total </th>
-											<th> Total </th>
+											<th> Total</th>
+											<th> Weight </th>
+											<th> Moisture </th>
+											<th> Discount </th>
 										</tr>
 									</thead>
 
@@ -86,12 +97,12 @@
 
 							</div>
 						</div>
-						<footer class="card-footer">
-							<button  class="card-footer-item has-background-info has-text-white "> <i class="fas fa-save has-text-white"> Save </i> </button>
+						<footer class="card-footer sticky">
+							<button class="card-footer-item has-background-info has-text-white "> <i class="fas fa-save fa-lg has-text-white"> Save </i> </button>
 
-							<button class="card-footer-item has-background-info has-text-white ">   <i class="fas fa-plus has-text-white"> Add</i> </button>
+							<button class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus fa-lg has-text-white"> Add</i> </button>
 
-							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-close has-text-white"> Cancel </i> </button>
+							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times fa-lg has-text-white"> Cancel </i> </button>
 						</footer>
 					</div>
 
@@ -127,11 +138,27 @@ export default{
 
 	data() {
 		return{
-			inventoryData: {
-
-			}
+			inventoryDatas: [{
+				weight: null,
+				moisture: null,
+				discount: null,
+			}],
 		}
 	},
+
+	methods: {
+		addInventoryData () {
+			this.inventoryDatas.push({
+				weight: null,
+				moisture: null,
+				discount: null
+			})
+		},
+
+		removeinventoryData: function(index) {
+			this.inventoryDatas.splice(index, 1);
+		},
+	}
 
 }
 </script>
