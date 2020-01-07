@@ -1,3 +1,4 @@
+
 <style lang="scss" scoped>
 
 @charset "utf-8";
@@ -30,7 +31,9 @@
 
     <div class="level-item has-text-centered">
       <div>
-       <i class="fas fa-camera fa-lg has-text-info"> </i> 
+      <figure class="image is-48x48">
+        <img class="is-rounded" src="/images/logo.png">
+      </figure>  
      </div>
    </div>
 

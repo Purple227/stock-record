@@ -57,12 +57,14 @@
 										</thead>
 
 										<tbody>
-											<tr v-for="(inventoryData, index) in inventoryDatas" :key="index">
+											<tr v-for="(inventoryData, index) in inventoryData" :key="index">
 												<th> {{ index+1 }}</th>
 
-												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.weight"> </td>
-												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.moisture"> </td>				
-												<td>    <input class="input" type="number" placeholder="Type here" v-model="inventoryData.discount"> </td>	
+												<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.weight"> </td>
+
+												<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.moisture"> </td>				
+												<td>    <input class="input" type="string" v-model="inventoryData.discount" disabled=""> </td>	
+
 												<td> <i class="fas fa-trash has-text-info" v-on:click="removeinventoryData(index);"></i> </span></td>										
 											</tr>
 										</tbody>
@@ -86,9 +88,11 @@
 										<tr>
 											<th>1</th>
 
-											<td>    <input class="input" type="number" disabled=""> </td>
-											<td>    <input class="input" type="number" disabled=""> </td>					
-											<td>    <input class="input" value="767" type="number" disabled=""> </td>											
+											<td>    <input class="input" type="number" disabled="" v-bind:value="getWeightTotal">  </td>
+
+											<td> <input class="input" type="number"  disabled="" >  </td>
+
+											<td>    <input class="input" type="number" disabled="" v-bind:value="getDiscountTotal"> </td>											
 										</tr>
 									</tbody>
 								</table>
@@ -98,9 +102,9 @@
 							</div>
 						</div>
 						<footer class="card-footer sticky">
-							<button class="card-footer-item has-background-info has-text-white "> <i class="fas fa-save fa-lg has-text-white"> Save </i> </button>
+							<button class="card-footer-item has-background-info has-text-white "> <i class="fas fa-save fa-lg has-text-white" > Save </i> </button>
 
-							<button class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus fa-lg has-text-white"> Add</i> </button>
+							<button class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus fa-lg has-text-white"> Add-Row</i> </button>
 
 							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times fa-lg has-text-white"> Cancel </i> </button>
 						</footer>
@@ -127,7 +131,6 @@
 
 
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import DynamicClassHandler from '../../mixins/dynamic-class-handler'
 
 export default{
@@ -138,27 +141,145 @@ export default{
 
 	data() {
 		return{
-			inventoryDatas: [{
+			inventoryData: [{
 				weight: null,
 				moisture: null,
 				discount: null,
 			}],
+
+			inventoryTotal: {
+				weight: null,
+				discount: null,
+				bag: null,
+			},
+
+			discount: null,
+			discountPlus: []
 		}
 	},
 
 	methods: {
 		addInventoryData () {
-			this.inventoryDatas.push({
+			this.inventoryData.push({
 				weight: null,
 				moisture: null,
-				discount: null
+				discount: null,
 			})
 		},
 
 		removeinventoryData: function(index) {
-			this.inventoryDatas.splice(index, 1);
-		},
-	}
+			this.inventoryData.splice(index, 1);
+		}
+
+	},
+
+	computed: {
+    // a computed getter
+    getWeightTotal: function () {
+    	var inventoryData = this.inventoryData
+    	var inventoryDataCount = this.inventoryData.length
+    	var i
+    	var holder = []
+    	var sum
+    	for (i=0; i<inventoryDataCount; i++) { 
+    		holder.push(inventoryData[i].weight)
+    	}
+
+        // Getting sum of weight
+        sum = holder.reduce(function(a, b){
+        	return a + b
+        }, 0);
+
+        this.inventoryTotal.weight = sum
+        return this.inventoryTotal.weight
+    },
+
+    getDiscountField: function () {
+    	var inventoryData  = this.inventoryData;
+    	var inventoryDataCount = this.inventoryData.length
+    	var i
+    	var holder = []
+    	var moisture 
+    	var sum
+
+    	for (i=0; i<inventoryDataCount; i++) {
+    		
+    		moisture = this.inventoryData[i].moisture
+    		if (moisture ==10 || moisture == 12 || moisture ==13) {
+    			holder.push(inventoryData[i].discount = "1kg")
+    		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
+    			holder.push(inventoryData[i].discount = "2kg")
+    		} else if(moisture == 18) {
+    			holder.push(inventoryData[i].discount = "3kg")
+    		} else if (moisture == 20) {
+    			holder.push(inventoryData[i].discount = "4kg")
+    		} else {
+    			holder.push(inventoryData[i].discount = "Out of range")
+    		}
+
+    	} // For loops end    	
+
+    	this.inventoryData.discount = holder
+    	return this.inventoryData.discount
+
+    }, // function calibrace close
+
+        getDiscountTotal: function () {
+    	var inventoryData  = this.inventoryData;
+    	var inventoryDataCount = this.inventoryData.length
+    	var i
+    	var holder = []
+    	var moisture 
+    	var sum
+
+    	for (i=0; i<inventoryDataCount; i++) {
+    		
+    		moisture = this.inventoryData[i].moisture
+    		if (moisture ==10 || moisture == 12 || moisture ==13) {
+    			holder.push(parseFloat(inventoryData[i].discount = "1kg"))
+    		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
+    			holder.push(parseFloat(inventoryData[i].discount = "2kg"))
+    		} else if(moisture == 18) {
+    			holder.push(parseFloat(inventoryData[i].discount = "3kg"))
+    		} else if (moisture == 20) {
+    			holder.push(parseFloat(inventoryData[i].discount = "4kg"))
+    		} else {
+    			holder.push(parseFloat(inventoryData[i].discount = "Out of range"))
+    		}
+
+    	} // For loops end    	
+
+        // Getting sum of weight
+        sum = holder.reduce(function(a, b){
+        	return a + b
+        }, 0);
+
+        this.inventoryTotal.discount = sum
+        return this.inventoryTotal.discount
+
+    }, // function calibrace close
+
+    getBagTotal: function() { 
+    	var inventoryTotalBags
+    	var convertToWhole
+    	var remainingKg
+    	var oneBag = 64
+    	var calculate
+    	var totalWeightWithDiscount
+    	inventoryTotalBags = (this.inventoryTotal.weight - this.inventoryTotal.discount) / oneBag
+    	convertToWhole = parseInt(inventoryTotalBags)
+    	calculate = oneBag * convertToWhole
+    	totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
+    	remainingKg = totalWeightWithDiscount - calculate
+
+    	this.inventoryTotal.bag = convertToWhole +" "+  remainingKg
+
+    } // function close
+
+    } // Computed closing calibrace
 
 }
 </script>
+
+
+
