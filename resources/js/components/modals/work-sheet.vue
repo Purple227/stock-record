@@ -38,9 +38,9 @@
 				<section class="modal-card-body">
 
 					<div class="card">
-						<!-- header class="card-header" -->
-						<!-- Header content goes here -->
-						<!-- /header -->
+						<!-- header class="card-header" >
+							// tags goes here 
+						</header -->
 						<div class="card-content">
 							<div class="content">
 
@@ -113,9 +113,9 @@
 
 				</section>
 
-				<!-- footer class="modal-card-foot" -->
-				<!-- Blah blah blah -->
-				<!-- /footer -->
+				<footer class="modal-card-foot modal-card-title has-text-centered" >
+				 	<p class="modal-card-title has-text-centered"> {{getBagTotal}} </p>
+				</footer>
 			</div>
 		</div>
 
@@ -214,7 +214,7 @@ export default{
     		} else if (moisture == 20) {
     			holder.push(inventoryData[i].discount = "4kg")
     		} else {
-    			holder.push(inventoryData[i].discount = "Out of range")
+    			holder.push(inventoryData[i].discount = "0kg")
     		}
 
     	} // For loops end    	
@@ -244,7 +244,7 @@ export default{
     		} else if (moisture == 20) {
     			holder.push(parseFloat(inventoryData[i].discount = "4kg"))
     		} else {
-    			holder.push(parseFloat(inventoryData[i].discount = "Out of range"))
+    			holder.push(parseFloat(inventoryData[i].discount = "0kg"))
     		}
 
     	} // For loops end    	
@@ -272,7 +272,8 @@ export default{
     	totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
     	remainingKg = totalWeightWithDiscount - calculate
 
-    	this.inventoryTotal.bag = convertToWhole +" "+  remainingKg
+    	this.inventoryTotal.bag = convertToWhole+"Bag"  +" And "+ " " +  remainingKg+"Kg"
+    	return this.inventoryTotal.bag
 
     } // function close
 

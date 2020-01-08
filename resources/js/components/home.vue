@@ -43,7 +43,7 @@
   		<h1 class="title is-bold has-text-black">45</h1>
   	</div>
     <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Ungraded Stocks Today </h2>
+      <h2 class="subtitle has-text-black"> Bad Stocks Today </h2>
       <h1 class="title is-bold has-text-black">218</h1>
     </div>
     <button class="button is-link is-pulled-right is-rounded"> Download Full Report </button>

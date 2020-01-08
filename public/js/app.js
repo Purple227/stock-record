@@ -1983,7 +1983,7 @@ __webpack_require__.r(__webpack_exports__);
         } else if (moisture == 20) {
           holder.push(inventoryData[i].discount = "4kg");
         } else {
-          holder.push(inventoryData[i].discount = "Out of range");
+          holder.push(inventoryData[i].discount = "0kg");
         }
       } // For loops end    	
 
@@ -2012,7 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
         } else if (moisture == 20) {
           holder.push(parseFloat(inventoryData[i].discount = "4kg"));
         } else {
-          holder.push(parseFloat(inventoryData[i].discount = "Out of range"));
+          holder.push(parseFloat(inventoryData[i].discount = "0kg"));
         }
       } // For loops end    	
       // Getting sum of weight
@@ -2037,7 +2037,8 @@ __webpack_require__.r(__webpack_exports__);
       calculate = oneBag * convertToWhole;
       totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount;
       remainingKg = totalWeightWithDiscount - calculate;
-      this.inventoryTotal.bag = convertToWhole + " " + remainingKg;
+      this.inventoryTotal.bag = convertToWhole + "Bag" + " And " + " " + remainingKg + "Kg";
+      return this.inventoryTotal.bag;
     } // function close
     // Computed closing calibrace
 
@@ -3803,7 +3804,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "box has-text-centered" }, [
         _c("h2", { staticClass: "subtitle has-text-black" }, [
-          _vm._v(" Ungraded Stocks Today ")
+          _vm._v(" Bad Stocks Today ")
         ]),
         _vm._v(" "),
         _c("h1", { staticClass: "title is-bold has-text-black" }, [
@@ -4071,7 +4072,20 @@ var render = function() {
                   )
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "footer",
+              {
+                staticClass:
+                  "modal-card-foot modal-card-title has-text-centered"
+              },
+              [
+                _c("p", { staticClass: "modal-card-title has-text-centered" }, [
+                  _vm._v(" " + _vm._s(_vm.getBagTotal) + " ")
+                ])
+              ]
+            )
           ])
         ])
       : _vm._e(),
