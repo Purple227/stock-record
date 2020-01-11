@@ -33,7 +33,7 @@
 			<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title has-text-centered"> Work-Sheet </p>
-					<button class="delete" aria-label="close" v-on:click="addActiveClass"></button>
+					<button class="delete" aria-label="close" v-on:click="addActiveClass" @click="totalBagData"></button>
 				</header>
 				<section class="modal-card-body">
 
@@ -106,7 +106,7 @@
 
 							<button class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus fa-lg has-text-white"> Add-Row</i> </button>
 
-							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times fa-lg has-text-white"> Cancel </i> </button>
+							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times fa-lg has-text-white" @click="totalBagData"> Cancel </i> </button>
 						</footer>
 					</div>
 
@@ -114,7 +114,7 @@
 				</section>
 
 				<footer class="modal-card-foot modal-card-title has-text-centered" >
-				 	<p class="modal-card-title has-text-centered"> {{getBagTotal}} </p>
+				 	<p class="modal-card-title has-text-centered"> {{ getBagTotal }} </p>
 				</footer>
 			</div>
 		</div>
@@ -132,8 +132,15 @@
 
 <script>
 import DynamicClassHandler from '../../mixins/dynamic-class-handler'
+import Landing from '../landing-page.vue'
 
 export default{
+	name: "work-sheet",
+
+	components: 
+  	{
+     'landing-page': Landing,
+  	},
 
 	mixins: [
 	DynamicClassHandler
@@ -146,6 +153,8 @@ export default{
 				moisture: null,
 				discount: null,
 			}],
+
+			blah: null,
 
 			inventoryTotal: {
 				weight: null,
@@ -169,6 +178,11 @@ export default{
 
 		removeinventoryData: function(index) {
 			this.inventoryData.splice(index, 1);
+		},
+
+		totalBagData: function(value) {
+			this.$emit('totalBag', this.inventoryTotal.bag)
+			this.blah = yuppy
 		}
 
 	},
@@ -205,7 +219,7 @@ export default{
     	for (i=0; i<inventoryDataCount; i++) {
     		
     		moisture = this.inventoryData[i].moisture
-    		if (moisture ==10 || moisture == 12 || moisture ==13) {
+    		if (moisture ==10 || moisture == 11 || moisture == 12 || moisture ==13) {
     			holder.push(inventoryData[i].discount = "1kg")
     		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
     			holder.push(inventoryData[i].discount = "2kg")
@@ -235,7 +249,7 @@ export default{
     	for (i=0; i<inventoryDataCount; i++) {
     		
     		moisture = this.inventoryData[i].moisture
-    		if (moisture ==10 || moisture == 12 || moisture ==13) {
+    		if (moisture ==10 || moisture == 11 || moisture == 12 || moisture ==13) {
     			holder.push(parseFloat(inventoryData[i].discount = "1kg"))
     		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
     			holder.push(parseFloat(inventoryData[i].discount = "2kg"))
@@ -272,7 +286,7 @@ export default{
     	totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
     	remainingKg = totalWeightWithDiscount - calculate
 
-    	this.inventoryTotal.bag = convertToWhole+"Bag"  +" And "+ " " +  remainingKg+"Kg"
+    	this.inventoryTotal.bag = convertToWhole+"Bag"  +" Plus "+ " " +  remainingKg+"Kg"
     	return this.inventoryTotal.bag
 
     } // function close

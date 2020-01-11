@@ -30,6 +30,11 @@
 </head>
 
 <body class="is-rounded">
+
+	<noscript>
+      <strong> Sorry but inventory app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
 	<div id="app">
 	<app> </app>
 	</div>

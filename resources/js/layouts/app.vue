@@ -30,7 +30,6 @@
   <div class="column is-11-desktop is-9-mobile second_column">  <!-- Second column tag start -->
     <navbar> </navbar>
     <router-view> </router-view>
-
   </div>   <!-- Second column tag end -->
 
 </div>   <!-- Columns wrapper -->
@@ -47,6 +46,8 @@ import Sidebar from './partials/sidebar.vue'
 
 export default 
 {
+
+	name: "app",
 
 	components: 
 	{

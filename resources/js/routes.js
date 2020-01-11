@@ -1,5 +1,5 @@
 
-import Home from './components/home.vue';
+import LandingPage from './components/landing-page.vue';
 import  NotFound from './components/not-found.vue';
 
 const routes = 
@@ -7,7 +7,7 @@ const routes =
 { 
     name:'home',
     path: '/',
-    component: Home
+    component: LandingPage
 },
 
 { 
