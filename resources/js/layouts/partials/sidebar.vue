@@ -53,16 +53,13 @@
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
       <a href="#" class="dropdown-item">
-        Dropdown item
+        Evacuate stocks
       </a>
       <a class="dropdown-item">
-        Other dropdown item
+        Login
       </a>
       <a href="#" class="dropdown-item is-active">
-        Active dropdown item
-      </a>
-      <a href="#" class="dropdown-item">
-        Other dropdown item
+        Register
       </a>
     </div>
   </div>

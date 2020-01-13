@@ -1765,7 +1765,7 @@ __webpack_require__.r(__webpack_exports__);
       myStyle: {
         marginTop: '4%'
       },
-      totalBag: null // Return calibrace close
+      totalBag: "No entry yet" // Return calibrace close
 
     };
   },
@@ -1773,7 +1773,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updatedBag: function updatedBag(value) {
       this.totalBag = value;
-    } // meyhod calibrace close
+    } // method calibrace close
 
   }
 });
@@ -1920,9 +1920,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1933,19 +1930,17 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_mixins_dynamic_class_handler__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
+      openClose: false,
       inventoryData: [{
         weight: null,
         moisture: null,
         discount: null
       }],
-      blah: null,
       inventoryTotal: {
         weight: null,
         discount: null,
         bag: null
-      },
-      discount: null,
-      discountPlus: []
+      }
     };
   },
   methods: {
@@ -1961,7 +1956,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     totalBagData: function totalBagData(value) {
       this.$emit('totalBag', this.inventoryTotal.bag);
-      this.blah = yuppy;
     }
   },
   computed: {
@@ -2214,9 +2208,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_dynamic_class_handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/dynamic-class-handler */ "./resources/js/mixins/dynamic-class-handler.js");
-//
-//
-//
 //
 //
 //
@@ -3787,10 +3778,9 @@ var render = function() {
           _vm._v(" Graded Stocks Today ")
         ]),
         _vm._v(" "),
-        _c("h1", {
-          staticClass: "title is-bold has-text-black",
-          domProps: { textContent: _vm._s(_vm.totalBag) }
-        })
+        _c("h1", { staticClass: "subtitle is-bold has-text-black" }, [
+          _vm._v(" " + _vm._s(_vm.totalBag) + "  ")
+        ])
       ]),
       _vm._v(" "),
       _vm._m(0)
@@ -3809,7 +3799,9 @@ var staticRenderFns = [
         _vm._v(" Total Graded In Store ")
       ]),
       _vm._v(" "),
-      _c("h1", { staticClass: "title is-bold has-text-black" }, [_vm._v("200")])
+      _c("h1", { staticClass: "subtitle is-bold has-text-black" }, [
+        _vm._v("200")
+      ])
     ])
   },
   function() {
@@ -3822,7 +3814,7 @@ var staticRenderFns = [
           _vm._v(" Stocks Evacuated Today ")
         ]),
         _vm._v(" "),
-        _c("h1", { staticClass: "title is-bold has-text-black" }, [
+        _c("h1", { staticClass: "subtitle is-bold has-text-black" }, [
           _vm._v("45")
         ])
       ]),
@@ -3832,7 +3824,7 @@ var staticRenderFns = [
           _vm._v(" Ungraded Stocks Today ")
         ]),
         _vm._v(" "),
-        _c("h1", { staticClass: "title is-bold has-text-black" }, [
+        _c("h1", { staticClass: "subtitle is-bold has-text-black" }, [
           _vm._v("218")
         ])
       ]),
@@ -4029,7 +4021,17 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "table",
-                      { staticClass: "table is-bordered is-centered " },
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.openClose,
+                            expression: "openClose"
+                          }
+                        ],
+                        staticClass: "table is-bordered is-centered"
+                      },
                       [
                         _vm._m(1),
                         _vm._v(" "),
@@ -4077,6 +4079,26 @@ var render = function() {
                         { staticClass: "fas fa-plus fa-lg has-text-white" },
                         [_vm._v(" Add-Row")]
                       )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "card-footer-item has-background-info has-text-white",
+                      on: {
+                        click: function($event) {
+                          _vm.openClose = !_vm.openClose
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-lg" }, [
+                        _vm._v(
+                          " " + _vm._s(_vm.openClose ? "Less" : "More") + " "
+                        )
+                      ])
                     ]
                   ),
                   _vm._v(" "),
@@ -4376,11 +4398,11 @@ var render = function() {
                   _c(
                     "a",
                     { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("\n        Dropdown item\n      ")]
+                    [_vm._v("\n        Evacuate stocks\n      ")]
                   ),
                   _vm._v(" "),
                   _c("a", { staticClass: "dropdown-item" }, [
-                    _vm._v("\n        Other dropdown item\n      ")
+                    _vm._v("\n        Login\n      ")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -4389,13 +4411,7 @@ var render = function() {
                       staticClass: "dropdown-item is-active",
                       attrs: { href: "#" }
                     },
-                    [_vm._v("\n        Active dropdown item\n      ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("\n        Other dropdown item\n      ")]
+                    [_vm._v("\n        Register\n      ")]
                   )
                 ])
               ]

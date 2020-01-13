@@ -13,11 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-	Route::apiResources
-	([
-		//'post' => 'PostController', Resource controller added here
-		//'projects' => 'ProjectController', adding another resource controller
-	]);
+Route::apiResources([
+    'inventory' => 'InventoryController',
+]);
 
 
 

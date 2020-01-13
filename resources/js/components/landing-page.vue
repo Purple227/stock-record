@@ -27,11 +27,11 @@
     <div class="column">  <!-- Second column tag start -->
      <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Graded Stocks Today </h2>
-      <h1 class="title is-bold has-text-black" v-text="totalBag">  </h1>
+      <h1 class="subtitle is-bold has-text-black"> {{ totalBag }}  </h1>
     </div>
     <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Total Graded In Store </h2>
-      <h1 class="title is-bold has-text-black">200</h1>
+      <h1 class="subtitle is-bold has-text-black">200</h1>
     </div>
   </div>  <!-- Second column tag end -->
 
@@ -40,11 +40,11 @@
   <div class="column">  <!-- Third column tag start -->
   	<div class="box has-text-centered">
   		<h2 class="subtitle has-text-black"> Stocks Evacuated Today </h2>
-  		<h1 class="title is-bold has-text-black">45</h1>
+  		<h1 class="subtitle is-bold has-text-black">45</h1>
   	</div>
     <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Ungraded Stocks Today </h2>
-      <h1 class="title is-bold has-text-black">218</h1>
+      <h1 class="subtitle is-bold has-text-black">218</h1>
     </div>
     <button class="button is-link is-pulled-right is-rounded"> Download Full Report </button>
   </div>  <!-- Third column tag end -->
@@ -72,7 +72,7 @@ export default {
      marginTop: '4%',
    },
 
-   totalBag: null,
+   totalBag: "No entry yet",
   } // Return calibrace close
   }, // data calibrace close
 
@@ -81,7 +81,7 @@ export default {
       this.totalBag = value
     }
 
-  }// meyhod calibrace close
+  }// method calibrace close
 
 }
 

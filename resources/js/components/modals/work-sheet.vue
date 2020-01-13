@@ -1,26 +1,21 @@
 <style lang="scss" scoped>
-
 @charset "utf-8";
 @import "~bulma/bulma";
 @import "../../../sass/partials/_reuse.scss";
 @import "../../../sass/partials/_responsive.scss";
-
 .box
 	{
 	box-shadow: 6px 6px 3px $black;
 	cursor: pointer;
 }
-
 .card-footer-item, .fa-trash
 {
 	cursor: pointer;
 }
-
 .sticky
 {
   @include position(0px, sticky);
 }
-
 </style>
 
 
@@ -73,7 +68,7 @@
 
 								</form>  <!-- Form tag close -->
 
-								<table class="table is-bordered is-centered ">
+								<table class="table is-bordered is-centered" v-show="openClose">
 
 									<thead>
 										<tr>
@@ -106,6 +101,8 @@
 
 							<button class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus fa-lg has-text-white"> Add-Row</i> </button>
 
+							<button class="card-footer-item has-background-info has-text-white" @click="openClose = !openClose"> <i class="fa fa-lg"> {{ openClose ? 'Less' : 'More' }} </i> </button>
+
 							<button class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times fa-lg has-text-white" @click="totalBagData"> Cancel </i> </button>
 						</footer>
 					</div>
@@ -133,28 +130,25 @@
 <script>
 import DynamicClassHandler from '../../mixins/dynamic-class-handler'
 import Landing from '../landing-page.vue'
-
 export default{
 	name: "work-sheet",
-
 	components: 
   	{
      'landing-page': Landing,
   	},
-
 	mixins: [
 	DynamicClassHandler
 	],
-
 	data() {
 		return{
+
+			openClose: false,
+
 			inventoryData: [{
 				weight: null,
 				moisture: null,
 				discount: null,
 			}],
-
-			blah: null,
 
 			inventoryTotal: {
 				weight: null,
@@ -162,8 +156,6 @@ export default{
 				bag: null,
 			},
 
-			discount: null,
-			discountPlus: []
 		}
 	},
 
@@ -182,40 +174,35 @@ export default{
 
 		totalBagData: function(value) {
 			this.$emit('totalBag', this.inventoryTotal.bag)
-			this.blah = yuppy
 		}
-
 	},
 
 	computed: {
     // a computed getter
     getWeightTotal: function () {
-    	var inventoryData = this.inventoryData
-    	var inventoryDataCount = this.inventoryData.length
-    	var i
-    	var holder = []
-    	var sum
+    	let inventoryData = this.inventoryData
+    	let inventoryDataCount = this.inventoryData.length
+    	let i
+    	let holder = []
+    	let sum
     	for (i=0; i<inventoryDataCount; i++) { 
     		holder.push(inventoryData[i].weight)
     	}
-
         // Getting sum of weight
         sum = holder.reduce(function(a, b){
         	return a + b
         }, 0);
-
         this.inventoryTotal.weight = sum
         return this.inventoryTotal.weight
     },
 
     getDiscountField: function () {
-    	var inventoryData  = this.inventoryData;
-    	var inventoryDataCount = this.inventoryData.length
-    	var i
-    	var holder = []
-    	var moisture 
-    	var sum
-
+    	let inventoryData  = this.inventoryData;
+    	let inventoryDataCount = this.inventoryData.length
+    	let i
+    	let holder = []
+    	let moisture 
+    	let sum
     	for (i=0; i<inventoryDataCount; i++) {
     		
     		moisture = this.inventoryData[i].moisture
@@ -230,22 +217,18 @@ export default{
     		} else {
     			holder.push(inventoryData[i].discount = "0kg")
     		}
-
     	} // For loops end    	
-
     	this.inventoryData.discount = holder
     	return this.inventoryData.discount
-
     }, // function calibrace close
 
         getDiscountTotal: function () {
-    	var inventoryData  = this.inventoryData;
-    	var inventoryDataCount = this.inventoryData.length
-    	var i
-    	var holder = []
-    	var moisture 
-    	var sum
-
+    	let inventoryData  = this.inventoryData;
+    	let inventoryDataCount = this.inventoryData.length
+    	let i
+    	let holder = []
+    	let moisture 
+    	let sum
     	for (i=0; i<inventoryDataCount; i++) {
     		
     		moisture = this.inventoryData[i].moisture
@@ -260,19 +243,15 @@ export default{
     		} else {
     			holder.push(parseFloat(inventoryData[i].discount = "0kg"))
     		}
-
     	} // For loops end    	
-
         // Getting sum of weight
         sum = holder.reduce(function(a, b){
         	return a + b
         }, 0);
-
         this.inventoryTotal.discount = sum
         return this.inventoryTotal.discount
-
     }, // function calibrace close
-
+    
     getBagTotal: function() { 
     	var inventoryTotalBags
     	var convertToWhole
@@ -285,16 +264,9 @@ export default{
     	calculate = oneBag * convertToWhole
     	totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
     	remainingKg = totalWeightWithDiscount - calculate
-
     	this.inventoryTotal.bag = convertToWhole+"Bag"  +" Plus "+ " " +  remainingKg+"Kg"
     	return this.inventoryTotal.bag
-
     } // function close
-
     } // Computed closing calibrace
-
 }
 </script>
-
-
-

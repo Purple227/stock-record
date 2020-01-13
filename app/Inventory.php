@@ -14,7 +14,7 @@ class Inventory extends Model
     protected $table = 'inventories';
 
     //Column that are fillable
-    protected $fillable = ['blah', 'blah'];
+    protected $fillable = ['total_weight', 'total_discount', 'total_bags'];
 
 
 }

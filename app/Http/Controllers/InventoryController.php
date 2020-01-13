@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Inventory;
-use App\Http\Requests\InventoryData;
 
 class InventoryController extends Controller
 {
@@ -19,24 +18,26 @@ class InventoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InventoryData $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+        'total_weight' => 'required',
+        'total_discount' => 'required',
+        'total_bags' => 'required',
+        ]);
+
+        $inventory = new Inventory;
+        $inventory->total_weight = $request->total_weight;
+        $inventory->total_discount = $request->total_discount;
+        $inventory->total_bags = $request->total_bags;
+        $inventory->save();
+
+
     }
 
     /**
@@ -46,17 +47,6 @@ class InventoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

@@ -24,7 +24,6 @@
     "dependencies": {
         "animate.css": "^3.7.2",
         "bulma": "^0.7.5",
-        "tinymce": "^5.0.15",
         "vue-axios": "^2.1.4",
         "vue-clickaway": "^2.2.2",
         "vue-moment": "^4.0.0",

@@ -12,7 +12,12 @@
 |
 */
 
-  Route::get('/{any}', 'HomeController@index')->where('any', '.*');
+/*Route::get('/', function () {
+    return view('play');
+});*/
+
+
+ Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
 
 
