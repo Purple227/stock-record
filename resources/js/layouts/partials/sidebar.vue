@@ -42,7 +42,7 @@
 
  <center>
 
-<div class="dropdown"  v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
+<div class="dropdown" v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
   <div class="dropdown-trigger">
     <button class="button is-rounded" aria-haspopup="true" aria-controls="dropdown-menu">
       <span class="icon">
@@ -71,9 +71,9 @@
   <i class="fas fa-home icon has-text-info icon_spacing"></i>
 </router-link>
 
-<span class="icon has-text-info icon_spacing">
-  <i class="fas fa-history "></i>
-</span>
+<router-link :to="{ name: 'history' }" active-class='is-active'>
+  <i class="fas fa-history icon has-text-info icon_spacing"></i>
+</router-link>
 
 <span class="icon has-text-info icon_spacing">
   <i class="fas fa-users "></i>
@@ -93,12 +93,12 @@
 
 <script>
 
-import dynamicClassToggler from '../../mixins/dynamic-class-handler'
+import classToggler from '../../mixins/classToggler'
 
 export default {
 
 mixins: [
-	dynamicClassToggler
+	classToggler
 ],
 
   data() {

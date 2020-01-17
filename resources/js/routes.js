@@ -1,6 +1,7 @@
 
 import LandingPage from './components/landing-page.vue';
 import  NotFound from './components/not-found.vue';
+import History from './components/history.vue';
 
 const routes = 
 [
@@ -8,6 +9,12 @@ const routes =
     name:'home',
     path: '/',
     component: LandingPage
+},
+
+{ 
+    name:'history',
+    path: 'history',
+    component: History
 },
 
 { 

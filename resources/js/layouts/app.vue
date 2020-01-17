@@ -51,8 +51,8 @@ export default
 
 	components: 
 	{
-		Navbar,
-		Sidebar,
+		'navbar': Navbar,
+		'sidebar': Sidebar,
 	},
 
 }

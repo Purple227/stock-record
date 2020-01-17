@@ -51,14 +51,13 @@
 
 
 <script>
-import DynamicClassHandler from '../../mixins/dynamic-class-handler'
+import classToggler from '../../mixins/classToggler'
 
 export default{
 
  mixins: [
- DynamicClassHandler
+ classToggler
  ],
-
 
  data() {
   return{

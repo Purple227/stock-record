@@ -14,7 +14,8 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        //
+        $inventories = Inventory::all();
+        return response()->json($inventories);
     }
 
     /**
@@ -71,6 +72,8 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+        $inventory->delete();
+        return response()->json($inventory);
     }
 }
