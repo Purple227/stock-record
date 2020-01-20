@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTotalGradedTable extends Migration
+class CreateInventoriesTotalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTotalGradedTable extends Migration
      */
     public function up()
     {
-        Schema::create('total_graded', function (Blueprint $table) {
+        Schema::create('inventories_total', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('thunking');
-
+            $table->string('total_data');
+            
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateTotalGradedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('total_graded');
+        Schema::dropIfExists('inventories_total');
     }
 }

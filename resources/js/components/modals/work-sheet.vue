@@ -23,13 +23,6 @@
 
 	<div class="">
 
-		<div class="" v-if="status">
-			<div class="notification is-black" >
-				<button class="delete" @click="status = false"></button>
-				Task added succesfull tap or click <router-link :to="{ name: 'history' }"> <i class="fas fa-history ">history</i> </router-link> for review
-			</div>
-		</div>
-
 		<div class="modal is-active" v-if='isActive'>
 			<div class="modal-background"></div>
 			<div class="modal-card">
@@ -60,7 +53,7 @@
 										<tr v-for="(inventoryData, index) in inventoryData" :key="index">
 											<th> {{ index+1 }}</th>
 
-											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.weight"> </td>
+											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.weight" autofocus="" required> </td>
 
 											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.moisture"> </td>				
 											<td>    <input class="input" type="string" v-model="inventoryData.discount" disabled=""> </td>	
@@ -133,7 +126,6 @@
 <script>
 import classToggler from '../../mixins/classToggler'
 import Landing from '../landing-page.vue'
-import { required, minLength } from 'vuelidate/lib/validators'
 
 export default{
 	name: "work-sheet",
@@ -167,18 +159,6 @@ export default{
 
 		}
 	},
-
-
-	validations: {
-		inventoryData: {
-			weight: {
-				required,
-				minLength: minLength(1)
-			},
-		}
-	},
-
-
 
 	methods: {
 		addInventoryData () {

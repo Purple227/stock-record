@@ -28,19 +28,19 @@ i
 
   <div class="wrapper" v-bind:style="myStyle">  <!-- Div wrapper -->
 
-<div class="" v-if="status">
-<div class="notification is-black" >
-  <button class="delete" @click="status = null "></button>
-  Task deleted succesfully
-</div>
-</div>
+    <div class="" v-if="status">
+      <div class="notification is-black" >
+        <button class="delete" @click="status = null "></button>
+        Task deleted succesfully
+      </div>
+    </div>
 
-<div class="" v-if="status == false">
-<div class="notification is-black" >
-  <button class="delete" @click="status = null "></button>
-  Task failed try again if it isn't intentional
-</div>
-</div>
+    <div class="" v-if="status == false">
+      <div class="notification is-black" >
+        <button class="delete" @click="status = null "></button>
+        Task cancelled
+      </div>
+    </div>
 
     <div class="card"> <!-- Card tag open -->
       <header class="card-header">
@@ -50,6 +50,23 @@ i
       </header>
       <div class="card-content">
         <div class="content table-container">
+
+          <!-- Main container -->
+          <nav class="level is-mobile">
+            <!-- Left side -->
+            <div class="level-left">
+              <div class="level-item">
+                <!-- Design flow will get in here -->
+              </div>
+            </div> <!-- Level left tag close -->
+
+            <!-- Right side -->
+            <div class="level-right">
+              <p class="level-item">
+                <!-- Design flow will get in here -->
+              </p>
+            </div>
+          </nav>
 
           <table class="table is-bordered "> 
 
@@ -79,7 +96,7 @@ i
 
                 <tr v-for="(inventory, index) in inventories" :key="index">
 
-                  <th class="has-text-success"> {{ index+1 }} </th>
+                  <th class="has-text-info"> {{ index+1 }} </th>
                   <td class=""> {{ inventory.total_weight }} </td>
                   <td class="is_hidden_mobile_tablet"> {{ inventory.total_discount}} </td>
                   <td class="is_hidden_mobile_tablet"> {{ inventory.total_bags}} </td>
@@ -95,7 +112,7 @@ i
                           </div>
                           <footer class="card-footer">
                             <a class="card-footer-item is-bold has-text-danger" v-on:click="deleteData(inventory.id, index)">Delete</a>
-                            <a class="card-footer-item is-bold has-text-info" v-on:click="isActive = false">Cancel</a>
+                            <a class="card-footer-item is-bold has-text-info" v-on:click="isActive = false, status = false">Cancel</a>
                           </footer>
                         </section>
                       </div>
@@ -112,8 +129,8 @@ i
           </div>
         </div>
         <footer class="card-footer">
-          <a href="#" class="card-footer-item is-bold">Previous</a>
-          <a href="#" class="card-footer-item is-bold">Next</a>
+          <a class="card-footer-item is-bold" @click="getInventoryData(pagination.previousPageUrl)">Previous</a>
+          <a class="card-footer-item is-bold" @click="getInventoryData(pagination.nextPageUrl)">Next</a>
         </footer>
       </div>
 
@@ -140,6 +157,11 @@ i
 
       inventories: [],
 
+      pagination: {
+        nextPageUrl: null,
+        previousPageUrl: null, 
+      },
+
       myStyle: {
        marginTop: '4%',
      },
@@ -148,27 +170,46 @@ i
   }, // data calibrace close
 
   mounted() {
-    let api = '/api/inventory';
-    this.axios
-    .get(api).then((response) => {
-      this.inventories = response.data
-    })
+    this.getInventoryData()
   },
 
   methods: {
+    getInventoryData(api) {
+      let api_url = api || "/api/inventory"
+      this.axios
+      .get(api_url).then((response) => {
+        this.inventories = response.data.data
+
+        let nextPageUrl = response.data.next_page_url
+        this.pagination.nextPageUrl = nextPageUrl ? nextPageUrl.slice(21) : null
+
+        let previousPageUrl = response.data.prev_page_url
+        this.pagination.previousPageUrl =  previousPageUrl ? previousPageUrl.slice(21) : null
+      })
+    },
+
+
+    nextPage() {
+      this.formStep.step++;
+    },
+
+    prevousPage() {
+      this.formStep.step--;
+    },
+
     deleteData(id, index) {
-        let api = 'api/inventory/' + id
+      let api = 'api/inventory/' + id
 
       this.axios.delete(api)
 
-       .then((response) => {
-          this.inventories.splice(index, 1);
-          this.status = true
-          this.isActive = false
-       })
+      .then((response) => {
+        this.inventories.splice(index, 1);
+        this.status = true
+        this.isActive = false
+      })
 
       .catch(function (error) {
-            this.status = false
+        this.status = false
       });
 
     }

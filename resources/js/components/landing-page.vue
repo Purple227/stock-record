@@ -24,6 +24,13 @@
 </div>
 </div>
 
+<div class="" v-if="status == false">
+<div class="notification is-black" >
+  <button class="delete" @click="status = null "></button>
+  Data not saved will be lost if you navigate away from home
+</div>
+</div>
+
   <div class="columns" v-bind:style="myStyle">  <!-- Columns wrapper -->
 
     <div class="column">  <!-- First column tag start -->

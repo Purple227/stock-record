@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Inventory;
 
-class InventoryController extends Controller
+class InventoryTotalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::paginate(5);
-        return response()->json($inventories);
+        //
     }
 
     /**
@@ -26,19 +24,7 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-        'total_weight' => 'required',
-        'total_discount' => 'required',
-        'total_bags' => 'required',
-        ]);
-
-        $inventory = new Inventory;
-        $inventory->total_weight = $request->total_weight;
-        $inventory->total_discount = $request->total_discount;
-        $inventory->total_bags = $request->total_bags;
-        $inventory->save();
-
-
+        //
     }
 
     /**
@@ -72,8 +58,6 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        $inventory = Inventory::findOrFail($id);
-        $inventory->delete();
-        return response()->json($inventory);
+        //
     }
 }
