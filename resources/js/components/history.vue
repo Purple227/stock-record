@@ -2,6 +2,7 @@
 
 @charset "utf-8";
 @import "~bulma/bulma";
+@import '~bulma-calendar/dist/css/bulma-calendar.min.css';
 @import "../../sass/partials/_reuse.scss";
 @import "../../sass/partials/_responsive.scss";
 
@@ -93,7 +94,7 @@ i
               </tfoot>
 
               <tbody>
-
+                <!-- deault table section -->
                 <tr v-for="(inventory, index) in inventories" :key="index">
 
                   <th class="has-text-info"> {{ index+1 }} </th>
@@ -130,6 +131,9 @@ i
         </div>
         <footer class="card-footer">
           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.previousPageUrl)">Previous</a>
+
+           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.dateSelected)"> <input type="date" data-display-mode="dialog"data-show-header="true" data-color="info" data-date-format="YYYY-MM-DD" id="my-element" v-model.lazy="pagination.dateSelected" @click="getInventoryData(pagination.dateSelected)"> <span class="button has-text-info"> Set </span> </a>
+
           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.nextPageUrl)">Next</a>
         </footer>
       </div>
@@ -141,6 +145,7 @@ i
 
   <script>
   import classToggler from '../mixins/classToggler'
+  import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js'
 
   export default {
     name: "history",
@@ -154,12 +159,16 @@ i
      return{
 
       status: null,
-
       inventories: [],
 
       pagination: {
         nextPageUrl: null,
         previousPageUrl: null, 
+        dateSelected: null,
+      },
+
+      datePicker: {
+        dateSelected: null,
       },
 
       myStyle: {
@@ -171,11 +180,13 @@ i
 
   mounted() {
     this.getInventoryData()
+    this.bulmaCalendar()
   },
 
   methods: {
     getInventoryData(api) {
       let api_url = api || "/api/inventory"
+      console.log(api_url)
       this.axios
       .get(api_url).then((response) => {
         this.inventories = response.data.data
@@ -186,15 +197,6 @@ i
         let previousPageUrl = response.data.prev_page_url
         this.pagination.previousPageUrl =  previousPageUrl ? previousPageUrl.slice(21) : null
       })
-    },
-
-
-    nextPage() {
-      this.formStep.step++;
-    },
-
-    prevousPage() {
-      this.formStep.step--;
     },
 
     deleteData(id, index) {
@@ -211,9 +213,34 @@ i
       .catch(function (error) {
         this.status = false
       });
+    },
 
-    }
-  }
+bulmaCalendar () {
+// Initialize all input of type date//
+let calendars = bulmaCalendar.attach('[type="date"]');
+
+// Loop on each calendar initialized
+calendars.forEach(calendar => {
+  // Add listener to date:selected event
+  calendar.on('date:selected', date => {
+    console.log(date);
+  });
+});
+
+// To access to bulmaCalendar instance of an element
+let element = document.querySelector('#my-element');
+if (element) {
+  // bulmaCalendar instance is available as element.bulmaCalendar
+  element.bulmaCalendar.on('select', datepicker => {
+    let selectedDate = datepicker.data.value()
+    selectedDate = selectedDate.replace(/\//g, "-")
+    this.pagination.dateSelected = "/api/inventory/"+selectedDate
+  });
+}
+
+}
+
+}
 
 }
 

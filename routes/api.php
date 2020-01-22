@@ -13,8 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('inventory/{date}', 'InventoryController@sortByDate');
+
 Route::apiResources([
     'inventory' => 'InventoryController',
+    'inventoryTotal' => 'InventoryTotalController'
 ]);
 
 

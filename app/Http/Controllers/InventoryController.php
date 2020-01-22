@@ -18,6 +18,13 @@ class InventoryController extends Controller
         return response()->json($inventories);
     }
 
+
+    public function sortByDate($date)
+    {
+        $by_date = Inventory::whereDate('created_at', $date)->paginate(5);
+        return response()->json($by_date);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,8 +44,6 @@ class InventoryController extends Controller
         $inventory->total_discount = $request->total_discount;
         $inventory->total_bags = $request->total_bags;
         $inventory->save();
-
-
     }
 
     /**
