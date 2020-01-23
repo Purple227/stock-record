@@ -14,15 +14,21 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::paginate(5);
+        $inventories = Inventory::orderBy('id', 'desc')->paginate(5);
         return response()->json($inventories);
     }
 
 
     public function sortByDate($date)
     {
-        $by_date = Inventory::whereDate('created_at', $date)->paginate(5);
+        $by_date = Inventory::whereDate('created_at', $date)->orderBy('id', 'desc')->paginate(5);
         return response()->json($by_date);
+    }
+
+    public function getBagInNumber()
+    {
+        $bag_by_number = Inventory::all('bag_in_number', 'created_at');
+        return response()->json($bag_by_number);
     }
 
     /**
@@ -37,12 +43,14 @@ class InventoryController extends Controller
         'total_weight' => 'required',
         'total_discount' => 'required',
         'total_bags' => 'required',
+        'bag_in_number' => 'required',
         ]);
 
         $inventory = new Inventory;
         $inventory->total_weight = $request->total_weight;
         $inventory->total_discount = $request->total_discount;
         $inventory->total_bags = $request->total_bags;
+        $inventory->bag_in_number = $request->bag_in_number;
         $inventory->save();
     }
 

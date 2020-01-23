@@ -21,7 +21,7 @@
             <span class="icon is-small">
               <i class="fas fa-calendar has-text-white"></i>
             </span>
-            <span class="is-bold">27</span>
+            <span class="is-bold">{{ todayDate | moment("DD MMM") }}</span>
           </button>
         </p>
       </div>
@@ -61,7 +61,7 @@ export default{
 
  data() {
   return{
-
+    todayDate: new Date(),
   }
 },
 

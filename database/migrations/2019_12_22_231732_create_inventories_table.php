@@ -19,6 +19,7 @@ class CreateInventoriesTable extends Migration
             $table->string('total_weight');
             $table->string('total_discount');
             $table->string('total_bags');
+            $table->string('bag_in_number');
             
             $table->timestamps();
         });

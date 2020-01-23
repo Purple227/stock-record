@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::get('inventory/{date}', 'InventoryController@sortByDate');
+Route::get('home', 'InventoryController@getBagInNumber');
+
 
 Route::apiResources([
     'inventory' => 'InventoryController',

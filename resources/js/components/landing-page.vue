@@ -40,12 +40,12 @@
 
     <div class="column">  <!-- Second column tag start -->
      <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Recently Graded Stocks </h2>
+      <h2 class="subtitle has-text-black"> Stocks Graded Today </h2>
       <h1 class="subtitle is-bold has-text-black"> {{ totalBag }}  </h1>
     </div>
     <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Graded In Store </h2>
-      <h1 class="subtitle is-bold has-text-black">200</h1>
+      <h2 class="subtitle has-text-black"> Total Graded In Store </h2>
+      <h1 class="subtitle is-bold has-text-black"> {{ getTotalRecord }}</h1>
     </div>
   </div>  <!-- Second column tag end -->
 
@@ -53,11 +53,11 @@
   <div class="column">  <!-- Third column tag start -->
   	<div class="box has-text-centered">
   		<h2 class="subtitle has-text-black"> Recently Evacuated </h2>
-  		<h1 class="subtitle is-bold has-text-black">45</h1>
+  		<h1 class="subtitle is-bold has-text-black">None Yet</h1>
   	</div>
     <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Total Stocks Evacuated </h2>
-      <h1 class="subtitle is-bold has-text-black">218</h1>
+      <h1 class="subtitle is-bold has-text-black">None Yet</h1>
     </div>
     <button class="button is-link is-pulled-right is-rounded"> Download Full Report </button>
   </div>  <!-- Third column tag end -->
@@ -85,27 +85,75 @@ export default {
    return{
 
     status: null,
-
     totalBag: "No Recent Entry",
+
+    totalStock: {
+      arrayOfStock: [],
+      sumOfStock: null,
+    },
+
+    todayStock: {
+      sumOfTodayStuck: null,
+    },
 
     myStyle: {
      marginTop: '2%',
    },
-
    
   } // Return calibrace close
   }, // data calibrace close
 
+  mounted() {
+    this.homeInventoryData()
+  },
+
   methods: {
+
+    homeInventoryData() {
+      let api_url = "/api/home"
+      this.axios
+      .get(api_url).then((response) => {
+        this.totalStock.arrayOfStock = response.data
+      })
+    },
+
     updatedBag: function(value) {
       this.totalBag = value
     },
 
     checkStatus: function(value) {
       this.status = value
-    }
+    },
 
-  }// method calibrace close
+  },// method calibrace close
+
+
+    computed: {
+    // a computed getter
+      getTotalRecord: function () {
+
+      let array = this.totalStock.arrayOfStock
+      let arrayCount = array.length
+      let LoopArray = []
+
+      for (let i = 0; i < arrayCount; i++) {
+        LoopArray.push(parseFloat(array[i].bag_in_number))
+      }
+
+        // Getting sum of weight
+        let sum = LoopArray.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+        sum = sum.toFixed(2)
+
+        let sumToString = sum.toString()
+        let sumToStringSplit = sumToString.split('.')
+
+        return this.totalStock.sumOfStock = sumToStringSplit[0]+"Bag"  +" Plus "+ " " +  sumToStringSplit[1]+"Kg"
+   },
+
+  } //Computed calibrace closes
 
 }
 

@@ -155,6 +155,7 @@ export default{
 				weight: null,
 				discount: null,
 				bag: null,
+				bagInNumber: null,
 			},
 
 		}
@@ -182,14 +183,17 @@ export default{
 			let total_bags
 			let total_weight
 			let total_discount
+			let bag_in_number
 
 			let weight = this.inventoryTotal.weight+"Kg"
 			let discount = this.inventoryTotal.discount+"Kg"
+			let bag = this.inventoryTotal.bagInNumber.toString()
 
 			this.axios.post(api, {
 				total_weight: weight,
 				total_discount: discount,
 				total_bags: this.inventoryTotal.bag,
+				bag_in_number: bag
 			})
 
 			.then((response) => {
@@ -213,16 +217,14 @@ export default{
     getWeightTotal: function () {
     	let inventoryData = this.inventoryData
     	let inventoryDataCount = this.inventoryData.length
-    	let i
     	let holder = []
-    	let sum
 
-    	for (i=0; i<inventoryDataCount; i++) { 
-    		holder.push(inventoryData[i].weight)
+    	for (let i=0; i<inventoryDataCount; i++) { 
+    		holder.push(parseInt(inventoryData[i].weight))
     	}
 
         // Getting sum of weight
-        sum = holder.reduce(function(a, b){
+        let sum = holder.reduce(function(a, b){
         	return a + b
         }, 0);
 
@@ -233,13 +235,10 @@ export default{
     getDiscountField: function () {
     	let inventoryData  = this.inventoryData;
     	let inventoryDataCount = this.inventoryData.length
-    	let i
     	let holder = []
-    	let moisture 
-    	let sum
 
-    	for (i=0; i<inventoryDataCount; i++) {
-    		moisture = this.inventoryData[i].moisture
+    	for (let i=0; i<inventoryDataCount; i++) {
+    		let moisture = this.inventoryData[i].moisture
     		if (moisture ==10 || moisture == 11 || moisture == 12 || moisture ==13) {
     			holder.push(inventoryData[i].discount = "1kg")
     		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
@@ -260,13 +259,10 @@ export default{
     getDiscountTotal: function () {
     	let inventoryData  = this.inventoryData;
     	let inventoryDataCount = this.inventoryData.length
-    	let i
     	let holder = []
-    	let moisture 
-    	let sum
 
-    	for (i=0; i<inventoryDataCount; i++) {   		
-    		moisture = this.inventoryData[i].moisture
+    	for (let i=0; i<inventoryDataCount; i++) {   		
+    		let moisture = this.inventoryData[i].moisture
     		if (moisture ==10 || moisture == 11 || moisture == 12 || moisture ==13) {
     			holder.push(parseFloat(inventoryData[i].discount = "1kg"))
     		} else if (moisture == 14 || moisture == 15 || moisture ==16) {
@@ -281,7 +277,7 @@ export default{
     	} // For loops end   
 
         // Getting sum of weight
-        sum = holder.reduce(function(a, b){
+        let sum = holder.reduce(function(a, b){
         	return a + b
         }, 0);
 
@@ -290,19 +286,22 @@ export default{
     }, // function calibrace close
     
     getBagTotal: function() { 
-    	let inventoryTotalBags
-    	let convertToWhole
-    	let remainingKg
     	let oneBag = 64
-    	let calculate
-    	let totalWeightWithDiscount
 
-    	inventoryTotalBags = (this.inventoryTotal.weight - this.inventoryTotal.discount) / oneBag
-    	convertToWhole = parseInt(inventoryTotalBags)
-    	calculate = oneBag * convertToWhole
-    	totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
-    	remainingKg = totalWeightWithDiscount - calculate
-    	this.inventoryTotal.bag = convertToWhole+"Bag"  +" Plus "+ " " +  remainingKg+"Kg"
+    	let inventoryTotalBags = (this.inventoryTotal.weight - this.inventoryTotal.discount) / oneBag
+    	let convertToWhole = parseInt(inventoryTotalBags)
+    	let calculate = oneBag * convertToWhole
+    	let totalWeightWithDiscount = this.inventoryTotal.weight - this.inventoryTotal.discount
+    	let remainingKg = totalWeightWithDiscount - calculate
+    	let totalBag = convertToWhole+"Bag"  +" Plus "+ " " +  remainingKg+"Kg"
+    	totalBag = totalBag.replace(/NaN/g, "0")
+    	console.log(totalBag)
+    	this.inventoryTotal.bag = totalBag
+
+
+    	//this to calculate overall stocks 
+    	this.inventoryTotal.bagInNumber = convertToWhole+"."+remainingKg
+
     	return this.inventoryTotal.bag
     } // function close
     } // Computed closing calibrace

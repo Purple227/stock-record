@@ -43,6 +43,13 @@ i
       </div>
     </div>
 
+    <div class="" v-if="inventories.length == 0">
+      <div class="notification is-black" >
+        <button class="delete" @click="getInventoryData()"></button>
+        No data store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
+      </div>
+    </div>
+
     <div class="card"> <!-- Card tag open -->
       <header class="card-header">
         <p class="card-header-title is-centered">
@@ -101,7 +108,7 @@ i
                   <td class=""> {{ inventory.total_weight }} </td>
                   <td class="is_hidden_mobile_tablet"> {{ inventory.total_discount}} </td>
                   <td class="is_hidden_mobile_tablet"> {{ inventory.total_bags}} </td>
-                  <td class="is_hidden_mobile_tablet"> {{ inventory.created_at}} </td>
+                  <td class="is_hidden_mobile_tablet"> {{ inventory.created_at | moment("Do MMM YYYY, hh:mm a") }} </td>
 
                   <td class="has-text-centered"> 
                     <div class="modal is-active is-rounded" v-if='isActive'>
@@ -132,7 +139,7 @@ i
         <footer class="card-footer">
           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.previousPageUrl)">Previous</a>
 
-           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.dateSelected)"> <input type="date" data-display-mode="dialog"data-show-header="true" data-color="info" data-date-format="YYYY-MM-DD" id="my-element" v-model.lazy="pagination.dateSelected" @click="getInventoryData(pagination.dateSelected)"> <span class="button has-text-info"> Set </span> </a>
+          <a class="card-footer-item is-bold" @click="getInventoryData(pagination.dateSelected)"> <input type="date" data-display-mode="dialog"data-show-header="true" data-color="info" data-date-format="YYYY-MM-DD" id="my-element" v-model.lazy="pagination.dateSelected" @click="getInventoryData(pagination.dateSelected)"> <span class="button has-text-info"> Set </span> </a>
 
           <a class="card-footer-item is-bold" @click="getInventoryData(pagination.nextPageUrl)">Next</a>
         </footer>
@@ -159,6 +166,8 @@ i
      return{
 
       status: null,
+      dateSelectedEmpty: null,
+      todayDate: new Date(),
       inventories: [],
 
       pagination: {
@@ -234,6 +243,7 @@ if (element) {
   element.bulmaCalendar.on('select', datepicker => {
     let selectedDate = datepicker.data.value()
     selectedDate = selectedDate.replace(/\//g, "-")
+    this.dateSelectedEmpty= selectedDate
     this.pagination.dateSelected = "/api/inventory/"+selectedDate
   });
 }

@@ -13,6 +13,8 @@ Vue.use(Vuelidate);
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+Vue.use(require('vue-moment'));
+
 // Router-view to mount
 import App from './layouts/app.vue';
 
