@@ -27,7 +27,7 @@ class InventoryController extends Controller
 
     public function getBagInNumber()
     {
-        $bag_by_number = Inventory::all('bag_in_number', 'created_at');
+        $bag_by_number = Inventory::all('total_weight', 'total_discount', 'created_at');
         return response()->json($bag_by_number);
     }
 

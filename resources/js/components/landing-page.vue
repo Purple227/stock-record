@@ -41,7 +41,7 @@
     <div class="column">  <!-- Second column tag start -->
      <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Stocks Graded Today </h2>
-      <h1 class="subtitle is-bold has-text-black"> {{ totalBag }}  </h1>
+      <h1 class="subtitle is-bold has-text-black"> {{ getTodayRecord }}  </h1>
     </div>
     <div class="box has-text-centered">
       <h2 class="subtitle has-text-black"> Total Graded In Store </h2>
@@ -131,27 +131,87 @@ export default {
     computed: {
     // a computed getter
       getTotalRecord: function () {
+        let oneBag = 64
 
-      let array = this.totalStock.arrayOfStock
-      let arrayCount = array.length
-      let LoopArray = []
-
-      for (let i = 0; i < arrayCount; i++) {
-        LoopArray.push(parseFloat(array[i].bag_in_number))
+      let weight = this.totalStock.arrayOfStock
+      let weightCount = weight.length
+      let LoopWeight = []
+      for (let i = 0; i < weightCount; i++) {
+        LoopWeight.push(parseFloat(weight[i].total_weight))
       }
 
         // Getting sum of weight
-        let sum = LoopArray.reduce(function(a, b){
+        let weightSum = LoopWeight.reduce(function(a, b){
           return a + b
         }, 0);
 
-        sum = sum.toFixed(2)
 
-        let sumToString = sum.toString()
-        let sumToStringSplit = sumToString.split('.')
+      let discount = this.totalStock.arrayOfStock
+      let discountCount = weight.length
+      let LoopDiscount = []
+      for (let i = 0; i < discountCount; i++) {
+        LoopDiscount.push(parseFloat(discount[i].total_discount))
+      }
 
-        return this.totalStock.sumOfStock = sumToStringSplit[0]+"Bag"  +" Plus "+ " " +  sumToStringSplit[1]+"Kg"
+        // Getting sum of weight
+        let discountSum = LoopDiscount.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+        let totalBags = (weightSum - discountSum) / oneBag 
+        let convertToWhole = parseInt(totalBags)
+        let calculate = oneBag * convertToWhole
+        let totalWeightWithDiscount = weightSum - discountSum
+        let calculateRemainder = totalWeightWithDiscount - calculate
+
+        let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
+        return this.totalStock.sumOfStock = overallBag
    },
+
+   getTodayRecord: function () {
+      let oneBag = 64
+      let todayDate = '2020-01-23'
+
+      let weight = this.totalStock.arrayOfStock
+      let weightCount = weight.length
+      let LoopWeight = []
+      for (let i = 0; i < weightCount; i++) {
+        let createdAt = weight[i].created_at
+        if(createdAt === todayDate) {
+        LoopWeight.push(parseFloat(weight[i].total_weight))
+      }
+      }
+
+        // Getting sum of weight
+        let weightSum = LoopWeight.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+
+      let discount = this.totalStock.arrayOfStock
+      let discountCount = weight.length
+      let LoopDiscount = []
+      for (let i = 0; i < discountCount; i++) {
+        let createdAt = weight[i].created_at
+        if(createdAt === todayDate) {
+        LoopDiscount.push(parseFloat(discount[i].total_discount))
+      }
+      }
+
+        // Getting sum of weight
+        let discountSum = LoopDiscount.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+        let totalBags = (weightSum - discountSum) / oneBag 
+        let convertToWhole = parseInt(totalBags)
+        let calculate = oneBag * convertToWhole
+        let totalWeightWithDiscount = weightSum - discountSum
+        let calculateRemainder = totalWeightWithDiscount - calculate
+
+        let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
+        return this.todayStock.sumOfTodayStock = overallBag
+   }
 
   } //Computed calibrace closes
 

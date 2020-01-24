@@ -2068,22 +2068,81 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     // a computed getter
     getTotalRecord: function getTotalRecord() {
-      var array = this.totalStock.arrayOfStock;
-      var arrayCount = array.length;
-      var LoopArray = [];
+      var oneBag = 64;
+      var weight = this.totalStock.arrayOfStock;
+      var weightCount = weight.length;
+      var LoopWeight = [];
 
-      for (var i = 0; i < arrayCount; i++) {
-        LoopArray.push(parseFloat(array[i].bag_in_number));
+      for (var i = 0; i < weightCount; i++) {
+        LoopWeight.push(parseFloat(weight[i].total_weight));
       } // Getting sum of weight
 
 
-      var sum = LoopArray.reduce(function (a, b) {
+      var weightSum = LoopWeight.reduce(function (a, b) {
         return a + b;
       }, 0);
-      sum = sum.toFixed(2);
-      var sumToString = sum.toString();
-      var sumToStringSplit = sumToString.split('.');
-      return this.totalStock.sumOfStock = sumToStringSplit[0] + "Bag" + " Plus " + " " + sumToStringSplit[1] + "Kg";
+      var discount = this.totalStock.arrayOfStock;
+      var discountCount = weight.length;
+      var LoopDiscount = [];
+
+      for (var _i = 0; _i < discountCount; _i++) {
+        LoopDiscount.push(parseFloat(discount[_i].total_discount));
+      } // Getting sum of weight
+
+
+      var discountSum = LoopDiscount.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      var totalBags = (weightSum - discountSum) / oneBag;
+      var convertToWhole = parseInt(totalBags);
+      var calculate = oneBag * convertToWhole;
+      var totalWeightWithDiscount = weightSum - discountSum;
+      var calculateRemainder = totalWeightWithDiscount - calculate;
+      var overallBag = convertToWhole + "Bag" + " Plus " + " " + calculateRemainder + "Kg";
+      return this.totalStock.sumOfStock = overallBag;
+    },
+    getTodayRecord: function getTodayRecord() {
+      var oneBag = 64;
+      var todayDate = '2020-01-23';
+      var weight = this.totalStock.arrayOfStock;
+      var weightCount = weight.length;
+      var LoopWeight = [];
+
+      for (var i = 0; i < weightCount; i++) {
+        var createdAt = weight[i].created_at;
+
+        if (createdAt === todayDate) {
+          LoopWeight.push(parseFloat(weight[i].total_weight));
+        }
+      } // Getting sum of weight
+
+
+      var weightSum = LoopWeight.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      var discount = this.totalStock.arrayOfStock;
+      var discountCount = weight.length;
+      var LoopDiscount = [];
+
+      for (var _i2 = 0; _i2 < discountCount; _i2++) {
+        var _createdAt = weight[_i2].created_at;
+
+        if (_createdAt === todayDate) {
+          LoopDiscount.push(parseFloat(discount[_i2].total_discount));
+        }
+      } // Getting sum of weight
+
+
+      var discountSum = LoopDiscount.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+      var totalBags = (weightSum - discountSum) / oneBag;
+      var convertToWhole = parseInt(totalBags);
+      var calculate = oneBag * convertToWhole;
+      var totalWeightWithDiscount = weightSum - discountSum;
+      var calculateRemainder = totalWeightWithDiscount - calculate;
+      var overallBag = convertToWhole + "Bag" + " Plus " + " " + calculateRemainder + "Kg";
+      return this.todayStock.sumOfTodayStock = overallBag;
     } //Computed calibrace closes
 
   }
@@ -4588,7 +4647,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("h1", { staticClass: "subtitle is-bold has-text-black" }, [
-            _vm._v(" " + _vm._s(_vm.totalBag) + "  ")
+            _vm._v(" " + _vm._s(_vm.getTodayRecord) + "  ")
           ])
         ]),
         _vm._v(" "),
