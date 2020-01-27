@@ -1,20 +1,23 @@
 <style lang="scss" scoped>
+
 @charset "utf-8";
 @import "~bulma/bulma";
 @import "../../../sass/partials/_reuse.scss";
 @import "../../../sass/partials/_responsive.scss";
 .box
-	{
+{
 	box-shadow: 6px 6px 3px $black;
 	cursor: pointer;
 }
+
 .card-footer-item, .fa-trash
-	{
+{
 	cursor: pointer;
 }
+
 .sticky
-	{
-	@include position(0px, sticky);
+{
+  @include position(0px, sticky);
 }
 </style>
 
@@ -28,14 +31,30 @@
 			<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title has-text-centered"> Work-Sheet </p>
-					<button class="delete" aria-label="close" v-on:click="addActiveClass" @click="totalBagData"></button>
+					<button class="delete" aria-label="close" v-on:click="addActiveClass" @click="cancelStatus"></button>
 				</header>
 				<section class="modal-card-body">
 					<form v-on:submit.prevent="savedData"> <!-- Form tag open -->
+						<div class="field">
+							<div class="field-label"></div>
+							<div class="field-body">
+								<div class="field is-expanded">
+									<div class="field has-addons">
+										<p class="control">
+											<a class="button is-static is-bold has-text-black">
+												Broker Name
+											</a>
+										</p>
+										<p class="control is-expanded">
+											<input class="input" type="text" v-model="broker" placeholder="Enter broker name here" autofocus="" required>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="card">
-						<!-- header class="card-header" >
-							// tags goes here 
-						</header -->
+						<!--header class="card-header" >
+						</header-->
 						<div class="card-content">
 							<div class="content">
 
@@ -53,7 +72,7 @@
 										<tr v-for="(inventoryData, index) in inventoryData" :key="index">
 											<th> {{ index+1 }}</th>
 
-											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.weight" autofocus="" required> </td>
+											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.weight" required> </td>
 
 											<td>    <input class="input" type="number" placeholder="Type here" v-model.number.trim="inventoryData.moisture"> </td>				
 											<td>    <input class="input" type="string" v-model="inventoryData.discount" disabled=""> </td>	
@@ -92,15 +111,15 @@
 
 							</div>
 						</div>
-						<footer class="card-footer">
-							<button class="card-footer-item has-background-info has-text-white " value="submit"> <i class="fas fa-save fa-lg  has-text-white" @click="totalBagData"> Save </i> </button>
+						<footer class="card-footer sticky">
+							<button class="card-footer-item has-background-info has-text-white " value="submit"> <i class="fas fa-save fa-lg  has-text-white" disabled> Save </i> </button>
 
 							<a class="card-footer-item has-background-info has-text-white" v-on:click="addInventoryData">   <i class="fas fa-plus  has-text-white"> Add-Row</i> </a>
 
 							<a class="card-footer-item has-background-info has-text-white" @click="openClose = !openClose"> <i class="fa "> {{ openClose ? 'Less' : 'More' }} </i> </a>
 
-							<a class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times has-text-white" @click="totalBagData"> Cancel </i> </a>
-						</footer>
+							<a class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times has-text-white" @click="cancelStatus"> Cancel </i> </a>
+						</footer> 
 					</div>
 
 				</form> <!-- form tag close -->
@@ -144,6 +163,7 @@ export default{
 
 			openClose: false,
 			status: null,
+			broker: null,
 
 			inventoryData: [{
 				weight: null,
@@ -155,7 +175,6 @@ export default{
 				weight: null,
 				discount: null,
 				bag: null,
-				bagInNumber: null,
 			},
 
 		}
@@ -174,8 +193,9 @@ export default{
 			this.inventoryData.splice(index, 1);
 		},
 
-		totalBagData: function(value) {
-			this.$emit('totalBag', this.inventoryTotal.bag)
+		cancelStatus: function(value) {
+			this.status = false
+			this.$emit('triggerMethod', this.status)
 		},
 
 		savedData(index, value) {
@@ -183,30 +203,25 @@ export default{
 			let total_bags
 			let total_weight
 			let total_discount
-			let bag_in_number
 
 			let weight = this.inventoryTotal.weight+"Kg"
 			let discount = this.inventoryTotal.discount+"Kg"
-			let bag = this.inventoryTotal.bagInNumber.toString()
 
 			this.axios.post(api, {
 				total_weight: weight,
 				total_discount: discount,
 				total_bags: this.inventoryTotal.bag,
-				bag_in_number: bag
-			})
-
-			.then((response) => {
+				broker: this.broker
+			}).then((response) => {
 				let arrayLength = this.inventoryData.length
 				this.inventoryData.splice(index, arrayLength)
+				this.broker = null
 				this.status = true
-				this.$emit('statusMethod', this.status)
+				this.$emit('triggerMethod', this.status)
 				this.isActive = false
-			})
-
-			.catch(function (error) {
+			}).catch(function (error) {
 				this.status = false
-				this.$emit('statusMethod', this.status)
+				this.$emit('triggerMethod', this.status)
 			});
 		},
 
@@ -295,7 +310,6 @@ export default{
     	let remainingKg = totalWeightWithDiscount - calculate
     	let totalBag = convertToWhole+"Bag"  +" Plus "+ " " +  remainingKg+"Kg"
     	totalBag = totalBag.replace(/NaN/g, "0")
-    	console.log(totalBag)
     	this.inventoryTotal.bag = totalBag
 
 

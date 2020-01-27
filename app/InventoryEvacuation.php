@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inventory extends Model
+class InventoryEvacuation extends Model
 {
+    
      /**
      * The table associated with the model.
      *
@@ -14,7 +15,6 @@ class Inventory extends Model
     protected $table = 'inventories';
 
     //Column that are fillable
-    protected $fillable = ['total_weight', 'total_discount', 'total_bags', 'broker'];
-
+    protected $fillable = ['name', 'tonne', 'weight', 'bags'];
 
 }

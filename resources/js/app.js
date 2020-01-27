@@ -13,6 +13,9 @@ Vue.use(Vuelidate);
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import moment from 'moment'
+Vue.prototype.moment = moment
+
 Vue.use(require('vue-moment'));
 
 // Router-view to mount

@@ -81,6 +81,7 @@ i
             <thead>
               <tr>
                 <th><abbr title="Number">No.</abbr></th>
+                <th>Broker Names</th>
                 <th>Weight</th>
                 <th>Discount</th>
                 <th>Bags</th>
@@ -92,6 +93,7 @@ i
               <tfoot>
                 <tr>
                   <th><abbr title="Number">No.</abbr></th>
+                  <th>Broker Names</th>
                   <th>Weight</th>
                   <th>Discount</th>
                   <th>Bags</th>
@@ -105,10 +107,11 @@ i
                 <tr v-for="(inventory, index) in inventories" :key="index">
 
                   <th class="has-text-info"> {{ index+1 }} </th>
-                  <td class=""> {{ inventory.total_weight }} </td>
-                  <td class="is_hidden_mobile_tablet"> {{ inventory.total_discount}} </td>
-                  <td class="is_hidden_mobile_tablet"> {{ inventory.total_bags}} </td>
-                  <td class="is_hidden_mobile_tablet"> {{ inventory.created_at | moment("Do MMM YYYY, hh:mm a") }} </td>
+                  <td> {{ inventory.broker }}</td>
+                  <td> {{ inventory.total_weight }} </td>
+                  <td> {{ inventory.total_discount}} </td>
+                  <td> {{ inventory.total_bags}} </td>
+                  <td> {{ inventory.created_at | moment("Do MMM YYYY, hh:mm a") }} </td>
 
                   <td class="has-text-centered"> 
                     <div class="modal is-active is-rounded" v-if='isActive'>

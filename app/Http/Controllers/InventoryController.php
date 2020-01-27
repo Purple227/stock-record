@@ -27,8 +27,8 @@ class InventoryController extends Controller
 
     public function getBagInNumber()
     {
-        $bag_by_number = Inventory::all('total_weight', 'total_discount', 'created_at');
-        return response()->json($bag_by_number);
+        $totalData = Inventory::all('total_weight', 'total_discount', 'created_at');
+        return response()->json($totalData);
     }
 
     /**
@@ -43,14 +43,14 @@ class InventoryController extends Controller
         'total_weight' => 'required',
         'total_discount' => 'required',
         'total_bags' => 'required',
-        'bag_in_number' => 'required',
+        'broker' => 'required'
         ]);
 
         $inventory = new Inventory;
         $inventory->total_weight = $request->total_weight;
         $inventory->total_discount = $request->total_discount;
         $inventory->total_bags = $request->total_bags;
-        $inventory->bag_in_number = $request->bag_in_number;
+        $inventory->broker = $request->broker;
         $inventory->save();
     }
 

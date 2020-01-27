@@ -27,37 +27,37 @@
 <div class="" v-if="status == false">
 <div class="notification is-black" >
   <button class="delete" @click="status = null "></button>
-  Data not saved will be lost if you navigate away from home
+  Please data not saved will be lost if you navigate out of the homepage.
 </div>
 </div>
 
   <div class="columns" v-bind:style="myStyle">  <!-- Columns wrapper -->
 
     <div class="column">  <!-- First column tag start -->
-      <work-sheet @totalBag="updatedBag" @statusMethod="checkStatus"> </work-sheet>
+      <work-sheet @triggerMethod="statusUpdate"> </work-sheet>
     </div>  <!-- First column tag end -->
 
 
     <div class="column">  <!-- Second column tag start -->
      <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Stocks Graded Today </h2>
-      <h1 class="subtitle is-bold has-text-black"> {{ getTodayRecord }}  </h1>
+      <h2 class="subtitle has-text-black is-bold"> Daily Record </h2>
+      <h1 class="subtitle has-text-black"> {{ getTodayRecord }}  </h1>
     </div>
     <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Total Graded In Store </h2>
-      <h1 class="subtitle is-bold has-text-black"> {{ getTotalRecord }}</h1>
+      <h2 class="subtitle has-text-black is-bold"> Stock At Hand </h2>
+      <h1 class="subtitle has-text-black"> {{ getTotalRecord }}</h1>
     </div>
   </div>  <!-- Second column tag end -->
 
 
   <div class="column">  <!-- Third column tag start -->
   	<div class="box has-text-centered">
-  		<h2 class="subtitle has-text-black"> Recently Evacuated </h2>
-  		<h1 class="subtitle is-bold has-text-black">None Yet</h1>
+  		<h2 class="subtitle has-text-black is-bold"> Evacuated Stock </h2>
+  		<h1 class="subtitle has-text-black">Working On It</h1>
   	</div>
     <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black"> Total Stocks Evacuated </h2>
-      <h1 class="subtitle is-bold has-text-black">None Yet</h1>
+      <h2 class="subtitle has-text-black is-bold"> Think Pad </h2>
+      <h1 class="subtitle has-text-black">UI strategy</h1>
     </div>
     <button class="button is-link is-pulled-right is-rounded"> Download Full Report </button>
   </div>  <!-- Third column tag end -->
@@ -85,15 +85,14 @@ export default {
    return{
 
     status: null,
-    totalBag: "No Recent Entry",
+
+    todayStock: {
+      sumOfTodayStuck: null,
+    },
 
     totalStock: {
       arrayOfStock: [],
       sumOfStock: null,
-    },
-
-    todayStock: {
-      sumOfTodayStuck: null,
     },
 
     myStyle: {
@@ -117,11 +116,7 @@ export default {
       })
     },
 
-    updatedBag: function(value) {
-      this.totalBag = value
-    },
-
-    checkStatus: function(value) {
+    statusUpdate: function(value) {
       this.status = value
     },
 
@@ -170,13 +165,14 @@ export default {
 
    getTodayRecord: function () {
       let oneBag = 64
-      let todayDate = '2020-01-23'
+      let todayDate = this.moment().format('YYYY-MM-DD')
+      //let todayDateFormat = todayDate.getFullYear() + "-" + todayDate.getMonth() + "-" + todayDate.getDate()
 
       let weight = this.totalStock.arrayOfStock
       let weightCount = weight.length
       let LoopWeight = []
       for (let i = 0; i < weightCount; i++) {
-        let createdAt = weight[i].created_at
+        let createdAt = weight[i].created_at.slice(0,10)
         if(createdAt === todayDate) {
         LoopWeight.push(parseFloat(weight[i].total_weight))
       }
@@ -192,7 +188,7 @@ export default {
       let discountCount = weight.length
       let LoopDiscount = []
       for (let i = 0; i < discountCount; i++) {
-        let createdAt = weight[i].created_at
+        let createdAt = discount[i].created_at.slice(0,10)
         if(createdAt === todayDate) {
         LoopDiscount.push(parseFloat(discount[i].total_discount))
       }
