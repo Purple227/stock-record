@@ -42,6 +42,7 @@
 
  <center>
 
+
 <div class="dropdown" v-bind:class="{ 'is-active': isActive }" v-on-clickaway="away" @click="addActiveClass">
   <div class="dropdown-trigger">
     <button class="button is-rounded" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -52,15 +53,15 @@
   </div>
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
-      <a href="#" class="dropdown-item">
-        Evacuate stocks
-      </a>
+      
       <a class="dropdown-item">
         Login
       </a>
+
       <a href="#" class="dropdown-item is-active">
         Register
       </a>
+
     </div>
   </div>
 </div>
@@ -97,13 +98,13 @@ import classToggler from '../../mixins/classToggler'
 
 export default {
 
-mixins: [
-	classToggler
-],
+  mixins: [
+  classToggler
+  ],
 
   data() {
     return {
-      
+
     }
   },
 

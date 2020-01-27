@@ -10,6 +10,11 @@
   box-shadow: 6px 6px 3px $black;
 }
 
+.sheet
+{
+  cursor: pointer;
+}
+
 </style>
 
 
@@ -17,44 +22,54 @@
 
   <div class="">
 
-<div class="" v-if="status">
-<div class="notification is-black" >
-  <button class="delete" @click="status = false"></button>
-  Task added succesfull tap or click <router-link :to="{ name: 'history' }"> <i class="fas fa-history ">history</i> </router-link> for review
-</div>
-</div>
+    <div class="" v-if="status">
+      <div class="notification is-black" >
+        <button class="delete" @click="status = null"></button>
+        Task added succesfull tap or click <router-link :to="{ name: 'history' }"> <i class="fas fa-history ">history</i> </router-link> for review
+      </div>
+    </div>
 
-<div class="" v-if="status == false">
-<div class="notification is-black" >
-  <button class="delete" @click="status = null "></button>
-  Please data not saved will be lost if you navigate out of the homepage.
-</div>
-</div>
+    <div class="" v-if="status == false">
+      <div class="notification is-black" >
+        <button class="delete" @click="status = null "></button>
+        Please data not saved will be lost if you navigate out of the homepage.
+      </div>
+    </div>
 
-  <div class="columns" v-bind:style="myStyle">  <!-- Columns wrapper -->
+    <div class="columns" v-bind:style="myStyle">  <!-- Columns wrapper -->
 
-    <div class="column">  <!-- First column tag start -->
-      <work-sheet @triggerMethod="statusUpdate"> </work-sheet>
-    </div>  <!-- First column tag end -->
+      <div class="column">  <!-- First column tag start -->
+
+        <div class="buttons is-centered" v-if="workSheet">
+        <arrived-sheet @triggerMethod="statusUpdate"> </arrived-sheet>
+        <evacuated-sheet> </evacuated-sheet>
+        </div>
+
+        <div class="box has-text-centered has-background-info sheet" @click="workSheet = !workSheet">
+          <h4 class="title is-4 has-text-white"> Work-Sheet</h4>
+          <i class="fas fa-plus fa-10x has-text-white"> </i> 
+        </div>
+
+      </div>  <!-- First column tag end -->
 
 
-    <div class="column">  <!-- Second column tag start -->
+      <div class="column">  <!-- Second column tag start -->
+       <div class="box has-text-centered">
+        <h2 class="subtitle has-text-black is-bold"> Daily Record </h2>
+        <h1 class="subtitle has-text-black"> {{ getTodayRecord }}  </h1>
+      </div>
+      <div class="box has-text-centered">
+        <h2 class="subtitle has-text-black is-bold"> Stock At Hand </h2>
+        <h1 class="subtitle has-text-black"> {{ getTotalRecord }}</h1>
+      </div>
+    </div>  <!-- Second column tag end -->
+
+
+    <div class="column">  <!-- Third column tag start -->
      <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black is-bold"> Daily Record </h2>
-      <h1 class="subtitle has-text-black"> {{ getTodayRecord }}  </h1>
+      <h2 class="subtitle has-text-black is-bold"> Evacuated Stock </h2>
+      <h1 class="subtitle has-text-black">Working On It</h1>
     </div>
-    <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black is-bold"> Stock At Hand </h2>
-      <h1 class="subtitle has-text-black"> {{ getTotalRecord }}</h1>
-    </div>
-  </div>  <!-- Second column tag end -->
-
-
-  <div class="column">  <!-- Third column tag start -->
-  	<div class="box has-text-centered">
-  		<h2 class="subtitle has-text-black is-bold"> Evacuated Stock </h2>
-  		<h1 class="subtitle has-text-black">Working On It</h1>
-  	</div>
     <div class="box has-text-centered">
       <h2 class="subtitle has-text-black is-bold"> Think Pad </h2>
       <h1 class="subtitle has-text-black">UI strategy</h1>
@@ -70,14 +85,16 @@
 
 
 <script>
-import WorkSheetModal from './modals/work-sheet.vue'
+import ArrivedSheetModal from './modals/arrived-sheet.vue'
+import EvacuatedSheetModal from './modals/evacuated-sheet.vue'
 
 export default {
   name: "landing-page",
 
   components: 
   {
-    'work-sheet': WorkSheetModal,
+    'arrived-sheet': ArrivedSheetModal,
+    'evacuated-sheet': EvacuatedSheetModal,
   },
 
   data() {
@@ -85,6 +102,7 @@ export default {
    return{
 
     status: null,
+    workSheet: false,
 
     todayStock: {
       sumOfTodayStuck: null,

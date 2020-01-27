@@ -12,7 +12,7 @@ class InventoryEvacuation extends Model
      *
      * @var string
      */
-    protected $table = 'inventories';
+    protected $table = 'inventory_evacuation';
 
     //Column that are fillable
     protected $fillable = ['name', 'tonne', 'weight', 'bags'];

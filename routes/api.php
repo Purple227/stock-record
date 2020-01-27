@@ -19,7 +19,7 @@ Route::get('home', 'InventoryController@getBagInNumber');
 
 Route::apiResources([
     'inventory' => 'InventoryController',
-    'inventoryTotal' => 'InventoryTotalController'
+    'inventoryEvacuation' => 'InventoryEvacuationController'
 ]);
 
 
