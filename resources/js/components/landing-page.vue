@@ -41,8 +41,8 @@
       <div class="column">  <!-- First column tag start -->
 
         <div class="buttons is-centered" v-if="workSheet">
-        <arrived-sheet @triggerMethod="statusUpdate"> </arrived-sheet>
-        <evacuated-sheet> </evacuated-sheet>
+        <arrived-sheet @triggerArrivedStatus="statusUpdate"> </arrived-sheet>
+        <evacuated-sheet @triggerEvacuateStatus="statusUpdate"> </evacuated-sheet>
         </div>
 
         <div class="box has-text-centered has-background-info sheet" @click="workSheet = !workSheet">
@@ -55,24 +55,24 @@
 
       <div class="column">  <!-- Second column tag start -->
        <div class="box has-text-centered">
-        <h2 class="subtitle has-text-black is-bold"> Daily Record </h2>
-        <h1 class="subtitle has-text-black"> {{ getTodayRecord }}  </h1>
+        <h2 class="subtitle has-text-black is-bold"> Stocks Arrived Today </h2>
+        <h1 class="subtitle has-text-black"> {{ getTodayArrivedBags }}  </h1>
       </div>
       <div class="box has-text-centered">
-        <h2 class="subtitle has-text-black is-bold"> Stock At Hand </h2>
-        <h1 class="subtitle has-text-black"> {{ getTotalRecord }}</h1>
+        <h2 class="subtitle has-text-black is-bold"> Total Stocks In Store </h2>
+        <h1 class="subtitle has-text-black"> {{ getTotalArrivedBags }}</h1>
       </div>
     </div>  <!-- Second column tag end -->
 
 
     <div class="column">  <!-- Third column tag start -->
      <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black is-bold"> Evacuated Stock </h2>
-      <h1 class="subtitle has-text-black">Working On It</h1>
+      <h2 class="subtitle has-text-black is-bold"> Stocks Evacuated Today </h2>
+      <h1 class="subtitle has-text-black"> {{ getTodayEvacuatedBag }}</h1>
     </div>
     <div class="box has-text-centered">
-      <h2 class="subtitle has-text-black is-bold"> Think Pad </h2>
-      <h1 class="subtitle has-text-black">UI strategy</h1>
+      <h2 class="subtitle has-text-black is-bold"> Total Stocks Evacuated </h2>
+      <h1 class="subtitle has-text-black"> {{ getTotalEvacuatedBag }} </h1>
     </div>
     <button class="button is-link is-pulled-right is-rounded"> Download Full Report </button>
   </div>  <!-- Third column tag end -->
@@ -87,9 +87,14 @@
 <script>
 import ArrivedSheetModal from './modals/arrived-sheet.vue'
 import EvacuatedSheetModal from './modals/evacuated-sheet.vue'
+import status from '../mixins/status'
 
 export default {
   name: "landing-page",
+
+  mixins: [
+  status
+ ],
 
   components: 
   {
@@ -104,13 +109,16 @@ export default {
     status: null,
     workSheet: false,
 
-    todayStock: {
-      sumOfTodayStuck: null,
+    arrived: {
+      arrayArrived: [],
+      sumArrived: null,
+      todayArrivedSum: null
     },
 
-    totalStock: {
-      arrayOfStock: [],
-      sumOfStock: null,
+    evacuated: {
+      arrayEvacuated: [],
+      sumEvacuated: null,
+      todayEvacuatedSum: null,
     },
 
     myStyle: {
@@ -121,19 +129,27 @@ export default {
   }, // data calibrace close
 
   mounted() {
-    this.homeInventoryData()
+    this.arrivedData()
+    this.evacuatedData()
   },
 
   methods: {
 
-    homeInventoryData() {
-      let api_url = "/api/home"
+    arrivedData() {
+      let api_url = "/api/home/arrived"
       this.axios
       .get(api_url).then((response) => {
-        this.totalStock.arrayOfStock = response.data
+        this.arrived.arrayArrived = response.data
       })
     },
 
+    evacuatedData() {
+      let api_url = "/api/home/evacuated"
+      this.axios
+      .get(api_url).then((response) => {
+        this.evacuated.arrayEvacuated = response.data
+      })
+    },
     statusUpdate: function(value) {
       this.status = value
     },
@@ -143,10 +159,10 @@ export default {
 
     computed: {
     // a computed getter
-      getTotalRecord: function () {
+      getTotalArrivedBags: function () {
         let oneBag = 64
 
-      let weight = this.totalStock.arrayOfStock
+      let weight = this.arrived.arrayArrived
       let weightCount = weight.length
       let LoopWeight = []
       for (let i = 0; i < weightCount; i++) {
@@ -159,7 +175,7 @@ export default {
         }, 0);
 
 
-      let discount = this.totalStock.arrayOfStock
+      let discount = this.arrived.arrayArrived
       let discountCount = weight.length
       let LoopDiscount = []
       for (let i = 0; i < discountCount; i++) {
@@ -178,15 +194,15 @@ export default {
         let calculateRemainder = totalWeightWithDiscount - calculate
 
         let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
-        return this.totalStock.sumOfStock = overallBag
+        return this.arrived.sumArrived = overallBag
    },
 
-   getTodayRecord: function () {
+   getTodayArrivedBags: function () {
       let oneBag = 64
       let todayDate = this.moment().format('YYYY-MM-DD')
       //let todayDateFormat = todayDate.getFullYear() + "-" + todayDate.getMonth() + "-" + todayDate.getDate()
 
-      let weight = this.totalStock.arrayOfStock
+      let weight = this.arrived.arrayArrived
       let weightCount = weight.length
       let LoopWeight = []
       for (let i = 0; i < weightCount; i++) {
@@ -202,7 +218,7 @@ export default {
         }, 0);
 
 
-      let discount = this.totalStock.arrayOfStock
+      let discount = this.arrived.arrayArrived
       let discountCount = weight.length
       let LoopDiscount = []
       for (let i = 0; i < discountCount; i++) {
@@ -224,7 +240,49 @@ export default {
         let calculateRemainder = totalWeightWithDiscount - calculate
 
         let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
-        return this.todayStock.sumOfTodayStock = overallBag
+        return this.arrived.todayArrivedSum = overallBag
+   },
+
+   getTotalEvacuatedBag: function () {
+      let oneBag = 64
+
+      let evacuated = this.evacuated.arrayEvacuated
+      let evacuatedCount = evacuated.length
+      let LoopEvacuated = []
+      for (let i = 0; i < evacuatedCount; i++) {
+        LoopEvacuated.push(parseFloat(evacuated[i].weight))
+      }
+
+        // Getting sum of weight
+        let evacuatedSum = LoopEvacuated.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+        let totalBags = evacuatedSum / oneBag 
+        return this.evacuated.sumEvacuated = totalBags+"Bags"
+   },
+
+   getTodayEvacuatedBag: function () {
+      let oneBag = 64
+      let todayDate = this.moment().format('YYYY-MM-DD')
+
+      let evacuated = this.evacuated.arrayEvacuated
+      let evacuatedCount = evacuated.length
+      let LoopEvacuated = []
+      for (let i = 0; i < evacuatedCount; i++) {
+        let createdAt = evacuated[i].created_at.slice(0,10)
+        if(createdAt === todayDate) {
+        LoopEvacuated.push(parseFloat(evacuated[i].weight))
+      }
+      }
+
+        // Getting sum of weight
+        let evacuatedSum = LoopEvacuated.reduce(function(a, b){
+          return a + b
+        }, 0);
+
+        let totalBags = evacuatedSum / oneBag 
+        return this.evacuated.todayEvacuatedSum = totalBags+"Bags"
    }
 
   } //Computed calibrace closes

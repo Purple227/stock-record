@@ -25,10 +25,10 @@ class InventoryController extends Controller
         return response()->json($by_date);
     }
 
-    public function getBagInNumber()
+    public function getBag()
     {
-        $totalData = Inventory::all('total_weight', 'total_discount', 'created_at');
-        return response()->json($totalData);
+        $get_bag = Inventory::all('total_weight', 'total_discount', 'created_at');
+        return response()->json($get_bag);
     }
 
     /**

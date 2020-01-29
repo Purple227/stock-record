@@ -13,13 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('inventory/{date}', 'InventoryController@sortByDate');
-Route::get('home', 'InventoryController@getBagInNumber');
+Route::get('arrived/{date}', 'InventoryController@sortByDate');
+Route::get('evacuated/{date}', 'InventoryEvacuationController@sortByDate');
 
+Route::get('home/arrived', 'InventoryController@getBag');
+Route::get('home/evacuated', 'InventoryEvacuationController@getBag');
 
 Route::apiResources([
-    'inventory' => 'InventoryController',
-    'inventoryEvacuation' => 'InventoryEvacuationController'
+    'arrived' => 'InventoryController',
+    'evacuated' => 'InventoryEvacuationController'
 ]);
 
 

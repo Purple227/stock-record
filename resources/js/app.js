@@ -6,10 +6,6 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios)
 
-import Vuelidate from "vuelidate";
-Vue.use(Vuelidate);
-
-
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 

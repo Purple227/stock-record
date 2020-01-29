@@ -20,8 +20,14 @@ class InventoryEvacuationController extends Controller
 
     public function sortByDate($date)
     {
-        $by_date = Inventory_Evacuation::whereDate('created_at', $date)->orderBy('id', 'desc')->paginate(5);
+        $by_date = InventoryEvacuation::whereDate('created_at', $date)->orderBy('id', 'desc')->paginate(5);
         return response()->json($by_date);
+    }
+
+    public function getBag()
+    {
+        $get_bag = InventoryEvacuation::all('weight', 'created_at');
+        return response()->json($get_bag);
     }
 
     /**
@@ -44,7 +50,7 @@ class InventoryEvacuationController extends Controller
         $inventory->name = $request->name;
         $inventory->tonne = $request->tonne;
         $inventory->weight = $request->weight;
-        $inventory->bag = $request->bag;
+        $inventory->bags = $request->bags;
         $inventory->save();
     }
 

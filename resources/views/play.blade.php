@@ -19,16 +19,19 @@
 
 <body>
 
-  <form action="{{url('/api/inventory')}}" method="POST">
+  <form action="{{url('/api/inventoryEvacuation')}}" method="POST">
     @csrf
-  <label> Weight Total: </label> <br>
-  <input type="text" name="total_weight"> <br>
+  <label> Name: </label> <br>
+  <input type="text" name="name"> <br>
 
-  <label> Discount Total: </label> <br>
-  <input type="text" name="total_discount"> <br>
+  <label> Tonne: </label> <br>
+  <input type="text" name="tonne"> <br>
 
-  <label> Total Bags: </label> <br>
-  <input type="text" name="total_bags"> <br>
+  <label> weight: </label> <br>
+  <input type="text" name="weight"> <br>
+
+  <label> Bags: </label> <br>
+  <input type="text" name="bags"> <br>
 
     <input type="submit" value="Submit">
 

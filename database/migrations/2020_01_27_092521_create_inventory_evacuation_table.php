@@ -19,7 +19,7 @@ class CreateInventoryEvacuationTable extends Migration
             $table->string('name');
             $table->string('tonne');
             $table->string('weight');
-            $table->string('bags')
+            $table->string('bags');
 
             $table->timestamps();
         });

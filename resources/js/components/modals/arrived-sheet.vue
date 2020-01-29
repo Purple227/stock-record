@@ -10,10 +10,6 @@
 	cursor: pointer;
 }
 
-.sticky
-{
-  @include position(0px, sticky);
-}
 </style>
 
 
@@ -129,9 +125,7 @@
 
 
 
-
-
-<button class="button is-white has-text-info is-rounded" @click="addActiveClass"> Arrived Stocks</button>
+<button class="button is-info has-text-white is-rounded" @click="addActiveClass"> Arrived Stocks</button>
 
 </div>
 
@@ -142,9 +136,9 @@
 import classToggler from '../../mixins/classToggler'
 
 export default{
-	name: "arrive-sheet",
+name: "arrive-sheet",
 
-	 mixins: [
+mixins: [
  classToggler
  ],
 
@@ -185,11 +179,11 @@ export default{
 
 		cancelStatus: function(value) {
 			this.status = false
-			this.$emit('triggerMethod', this.status)
+			this.$emit('triggerArrivedStatus', this.status)
 		},
 
 		savedData(index, value) {
-			let api = '/api/inventory'
+			let api = '/api/arrived'
 			let total_bags
 			let total_weight
 			let total_discount
@@ -207,11 +201,11 @@ export default{
 				this.inventoryData.splice(index, arrayLength)
 				this.broker = null
 				this.status = true
-				this.$emit('triggerMethod', this.status)
+				this.$emit('triggerArrivedStatus', this.status)
 				this.isActive = false
 			}).catch(function (error) {
 				this.status = false
-				this.$emit('triggerMethod', this.status)
+				this.$emit('triggerArrivedStatus', this.status)
 			});
 		},
 
