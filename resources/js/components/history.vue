@@ -13,10 +13,9 @@
 
 <div>
 
-
-<div class="buttons">
-  <button class="button is-success" @click="arrivedComponent"> Arrived Table </button>
-  <button class="button is-info" @click="evacuateComponent"> Evacuate Table </button>
+<div class="buttons has-addons is-right" v-bind:style="myStyle">
+  <button class="button is-rounded"  @click="arrivedComponent"> Arrived Table </button>
+  <button class="button is-rounded" @click="evacuateComponent"> Evacuated Table </button>
 </div>
 
 <keep-alive>
@@ -42,7 +41,10 @@ export default{
 
 	data() {
 		return{
-			componentToggle: 'arrived'
+			componentToggle: 'arrived',
+			myStyle: {
+				marginTop: '2%',
+			},
 		}
 	},
 

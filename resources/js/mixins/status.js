@@ -10,8 +10,7 @@ export default {
 	},
 
 	watch: {
-		status(val) {
-			this.status = val
+		status() {
 			setTimeout(() => {
 				this.status = null
 			}, 8000)

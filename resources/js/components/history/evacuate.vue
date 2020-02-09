@@ -27,7 +27,7 @@ i
 
 
 
-  <div class="wrapper" v-bind:style="myStyle">  <!-- Div wrapper -->
+  <div class="wrapper">  <!-- Div wrapper -->
 
     <div class="" v-if="status">
       <div class="notification is-black" >
@@ -46,14 +46,14 @@ i
     <div class="" v-if="inventories.length == 0">
       <div class="notification is-black" >
         <button class="delete" @click="getInventoryData()"></button>
-        No data store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
+        No stocks store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
       </div>
     </div>
 
     <div class="card"> <!-- Card tag open -->
       <header class="card-header">
         <p class="card-header-title is-centered">
-          Inventory Datas
+          Evacuated Stocks
         </p>
       </header>
       <div class="card-content">
@@ -184,10 +184,6 @@ i
         dateSelected: null,
       },
 
-      myStyle: {
-       marginTop: '4%',
-     },
-
   } // Return calibrace close
   }, // data calibrace close
 
@@ -247,7 +243,7 @@ if (element) {
     let selectedDate = datepicker.data.value()
     selectedDate = selectedDate.replace(/\//g, "-")
     this.dateSelectedEmpty= selectedDate
-    this.pagination.dateSelected = "/api/evacuated/"+selectedDate
+    this.pagination.dateSelected = "/api/evacuated/date/"+selectedDate
   });
 }
 

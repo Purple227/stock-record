@@ -13,6 +13,7 @@
 .sheet
 {
   cursor: pointer;
+  transition: all 0.6s;
 }
 
 </style>
@@ -32,7 +33,7 @@
     <div class="" v-if="status == false">
       <div class="notification is-black" >
         <button class="delete" @click="status = null "></button>
-        Please data not saved will be lost if you navigate out of the homepage.
+        Please stocks not saved will be lost if you navigate out of the homepage.
       </div>
     </div>
 
@@ -108,6 +109,7 @@ export default {
 
     status: null,
     workSheet: false,
+    test: null,
 
     arrived: {
       arrayArrived: [],
@@ -150,17 +152,21 @@ export default {
         this.evacuated.arrayEvacuated = response.data
       })
     },
+
+
     statusUpdate: function(value) {
       this.status = value
+        setTimeout(() => {
+          this.$router.go()
+        }, 500)
     },
 
   },// method calibrace close
 
-
     computed: {
     // a computed getter
       getTotalArrivedBags: function () {
-        let oneBag = 64
+      let oneBag = 64
 
       let weight = this.arrived.arrayArrived
       let weightCount = weight.length
@@ -187,14 +193,33 @@ export default {
           return a + b
         }, 0);
 
-        let totalBags = (weightSum - discountSum) / oneBag 
-        let convertToWhole = parseInt(totalBags)
-        let calculate = oneBag * convertToWhole
+        let totalBags = parseInt((weightSum - discountSum) / oneBag)
+        let calculate = oneBag * totalBags
         let totalWeightWithDiscount = weightSum - discountSum
         let calculateRemainder = totalWeightWithDiscount - calculate
 
-        let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
-        return this.arrived.sumArrived = overallBag
+        let overallWeight = totalBags +"."+ calculateRemainder
+        overallWeight = parseFloat(overallWeight)
+
+        let sumEvacuated = parseInt(this.evacuated.sumEvacuated)
+
+        let overallBag = overallWeight - sumEvacuated
+
+        if (weightSum == 0) {
+          return this.arrived.sumArrived = "Nothing In Store"
+        } else if (this.evacuated.sumEvacuated == "No Stock Evacuated") {
+          overallWeight = overallWeight.toString()
+          overallWeight = overallWeight.split(".")
+          overallWeight = overallWeight[0] +"Bags"  +" Plus "+ " " + overallWeight[1]+"Kg"
+          return this.arrived.sumArrived = overallWeight
+        } else if (overallBag > 1) {
+          overallBag = overallBag.toString()
+          overallBag = overallBag.split(".")
+          overallBag = overallBag[0] +"Bags"  +" Plus "+ " " + overallBag[1]+"Kg"
+          return this.arrived.sumArrived = overallBag
+        } else {
+          return this.arrived.sumArrived = "You Evacuated Morethan You Have In Store"
+        }
    },
 
    getTodayArrivedBags: function () {
@@ -240,7 +265,13 @@ export default {
         let calculateRemainder = totalWeightWithDiscount - calculate
 
         let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
-        return this.arrived.todayArrivedSum = overallBag
+
+        if (totalBags > 1) {
+          return this.arrived.todayArrivedSum = overallBag
+        } else {
+          return this.arrived.todayArrivedSum = "No Stock Added Today"
+        }
+        
    },
 
    getTotalEvacuatedBag: function () {
@@ -259,7 +290,13 @@ export default {
         }, 0);
 
         let totalBags = evacuatedSum / oneBag 
-        return this.evacuated.sumEvacuated = totalBags+"Bags"
+
+        if (totalBags > 1) {
+          return this.evacuated.sumEvacuated = totalBags+"Bags"
+        } else {
+          return this.evacuated.sumEvacuated = "No Stock Evacuated"
+        }
+        
    },
 
    getTodayEvacuatedBag: function () {
@@ -282,6 +319,12 @@ export default {
         }, 0);
 
         let totalBags = evacuatedSum / oneBag 
+
+        if (totalBags > 1) {
+          return this.evacuated.sumEvacuated = totalBags+"Bags"
+        } else {
+          return this.evacuated.sumEvacuated = "No Stock Evacuated Today"
+        }
         return this.evacuated.todayEvacuatedSum = totalBags+"Bags"
    }
 

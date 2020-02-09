@@ -14,6 +14,9 @@ Vue.prototype.moment = moment
 
 Vue.use(require('vue-moment'));
 
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
+
 // Router-view to mount
 import App from './layouts/app.vue';
 

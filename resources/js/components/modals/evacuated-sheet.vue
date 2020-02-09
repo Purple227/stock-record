@@ -58,7 +58,7 @@
 									<tbody>
 										<tr>
 
-											<td> <input class="input" type="number" v-model.number="evacuated.tonne">  </td>
+											<td> <input class="input" type="number" v-model.number="evacuated.tonne" required>  </td>
 
 											<td> <input class="input" type="number" v-bind:value="getWeight" disabled="">  </td>
 											

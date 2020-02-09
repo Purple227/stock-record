@@ -13,11 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('arrived/{date}', 'InventoryController@sortByDate');
-Route::get('evacuated/{date}', 'InventoryEvacuationController@sortByDate');
+Route::get('arrived/date/{date}', 'InventoryController@sortByDate');
+Route::get('evacuated/date/{date}', 'InventoryEvacuationController@sortByDate');
 
 Route::get('home/arrived', 'InventoryController@getBag');
 Route::get('home/evacuated', 'InventoryEvacuationController@getBag');
+
+Route::post('register', 'Auth\RegisterController@register');
 
 Route::apiResources([
     'arrived' => 'InventoryController',

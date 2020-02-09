@@ -14,7 +14,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::orderBy('id', 'desc')->paginate(5);
+        $inventories = Inventory::orderBy('id', 'desc')->paginate(4);
         return response()->json($inventories);
     }
 
@@ -62,7 +62,8 @@ class InventoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+        return response()->json($inventory);
     }
 
     /**
@@ -74,7 +75,21 @@ class InventoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    
+        $inventory = Inventory::findOrFail($id);
+
+        $validatedData = $request->validate([
+        'total_weight' => 'required',
+        'total_discount' => 'required',
+        'total_bags' => 'required',
+        'broker' => 'required'
+        ]);
+
+        $inventory->total_weight = $request->total_weight;
+        $inventory->total_discount = $request->total_discount;
+        $inventory->total_bags = $request->total_bags;
+        $inventory->broker = $request->broker;
+        $inventory->save();
     }
 
     /**

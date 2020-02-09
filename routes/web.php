@@ -17,6 +17,11 @@
 });*/
 
 
+Route::get('guard', 'UserController@loginGuard');
+
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout');
+
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 
 

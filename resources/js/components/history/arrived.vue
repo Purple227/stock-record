@@ -27,7 +27,7 @@ i
 
 
 
-  <div class="wrapper" v-bind:style="myStyle">  <!-- Div wrapper -->
+  <div class="wrapper">  <!-- Div wrapper -->
 
     <div class="" v-if="status">
       <div class="notification is-black" >
@@ -46,14 +46,14 @@ i
     <div class="" v-if="inventories.length == 0">
       <div class="notification is-black" >
         <button class="delete" @click="getInventoryData()"></button>
-        No data store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
+        No stocks store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
       </div>
     </div>
 
     <div class="card"> <!-- Card tag open -->
       <header class="card-header">
         <p class="card-header-title is-centered">
-          Inventory Datas
+          Arrived Stocks
         </p>
       </header>
       <div class="card-content">
@@ -129,6 +129,13 @@ i
                       </div>
                     </div>
                     <i class="fas fa-trash has-text-info" v-on:click="addActiveClass"></i>
+
+
+                    <!-- Edit Section -->
+                    <router-link :to="{name: 'edit-arrived', params: {id: inventory.id}}" v-bind:style="myStyle">
+                    <i class="fas fa-edit has-text-info" ></i>
+                    </router-link>
+                    <!-- Edit Section -->
                   </td>
 
                 </tr>
@@ -157,6 +164,7 @@ i
   import classToggler from '../../mixins/classToggler'
   import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js'
   import status from '../../mixins/status'
+  import EditArrived from '../modals/edit-arrived.vue'
 
 
   export default {
@@ -165,6 +173,10 @@ i
     mixins: [
     classToggler, status
     ],
+
+    components: {
+      'edit-arrived': EditArrived
+    },
 
     data() {
 
@@ -175,6 +187,10 @@ i
       todayDate: new Date(),
       inventories: [],
 
+    myStyle: {
+     marginLeft: '8%',
+   },
+
       pagination: {
         nextPageUrl: null,
         previousPageUrl: null, 
@@ -184,10 +200,6 @@ i
       datePicker: {
         dateSelected: null,
       },
-
-      myStyle: {
-       marginTop: '4%',
-     },
 
   } // Return calibrace close
   }, // data calibrace close
@@ -248,7 +260,7 @@ if (element) {
     let selectedDate = datepicker.data.value()
     selectedDate = selectedDate.replace(/\//g, "-")
     this.dateSelectedEmpty= selectedDate
-    this.pagination.dateSelected = "/api/arrived/"+selectedDate
+    this.pagination.dateSelected = "/api/arrived/date/"+selectedDate
   });
 }
 

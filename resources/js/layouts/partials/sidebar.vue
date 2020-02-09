@@ -53,14 +53,10 @@
   </div>
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
-      
-      <a class="dropdown-item">
-        Login
-      </a>
 
-      <a href="#" class="dropdown-item is-active">
-        Register
-      </a>
+      <a class="dropdown-item"> 
+        Contact The Developer
+      </a>      
 
     </div>
   </div>
@@ -76,9 +72,9 @@
   <i class="fas fa-history icon has-text-info icon_spacing"></i>
 </router-link>
 
-<span class="icon has-text-info icon_spacing">
-  <i class="fas fa-users "></i>
-</span>
+<router-link :to="{ name: 'user-profile' }" active-class='is-active'>
+  <i class="fas fa-users icon has-text-info icon_spacing"></i>
+</router-link>
 
 <span class="icon has-text-info icon_spacing">
   <i class="fas fa-info-circle "></i>

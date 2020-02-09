@@ -11,7 +11,26 @@
 	{
 	background-color: $light-grey;
 	border: 2px solid $light-grey;
-    border-radius: 10px;
+	border-radius: 10px;
+}
+
+.v-enter-active
+	{
+	animation: bounceIn 1.5s; 
+}
+
+
+@keyframes bounceIn
+{
+
+50% {
+transform: scale(0.5);
+} 
+
+100% {
+transform: scale(1);
+}
+
 }
 
 </style>
@@ -29,7 +48,10 @@
 
   <div class="column is-11-desktop is-9-mobile second_column">  <!-- Second column tag start -->
     <navbar> </navbar>
-    <router-view> </router-view>
+    <transition>
+	    <router-view v-if="guard"> </router-view>
+	    <login v-else> </login>
+	</transition>
   </div>   <!-- Second column tag end -->
 
 </div>   <!-- Columns wrapper -->
@@ -43,6 +65,7 @@
 
 import Navbar from './partials/navbar.vue'
 import Sidebar from './partials/sidebar.vue'
+import Login from '../components/modals/login.vue'
 
 export default 
 {
@@ -53,7 +76,30 @@ export default
 	{
 		'navbar': Navbar,
 		'sidebar': Sidebar,
+		'login': Login,
 	},
+
+	data() {
+		return{
+			guard: false,
+		}
+	},
+
+	mounted() {
+		this.loginGuard()
+	},
+
+	methods: {
+
+		loginGuard() {
+			let api_url = "guard"
+			this.axios
+			.get(api_url).then((response) => {
+				this.guard = response.data
+			})
+		},
+
+}//method calibrace closes
 
 }
 
