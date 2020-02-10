@@ -152,7 +152,7 @@
           </form>
         </section>
         <footer class="modal-card-foot modal-card-title has-text-centered" >
-          <p class="modal-card-title has-text-centered is-small"> Already registered <router-link :to="{ name: 'login' }"> Login </router-link> instead </p>
+          <p class="modal-card-title has-text-centered is-small"> Already registered <a @click="addActiveClass"> Login </a> instead </p>
         </footer>
       </div>
     </div>

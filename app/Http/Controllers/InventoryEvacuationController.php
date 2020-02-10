@@ -62,7 +62,8 @@ class InventoryEvacuationController extends Controller
      */
     public function show($id)
     {
-        //
+        $inventory = InventoryEvacuation::findOrFail($id);
+        return response()->json($inventory);
     }
 
     /**
@@ -74,7 +75,21 @@ class InventoryEvacuationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $inventory = InventoryEvacuation::findOrFail($id);
+
+        $validatedData = $request->validate([
+        'name' => 'required',
+        'tonne' => 'required',
+        'weight' => 'required',
+        'bags' => 'required'
+        ]);
+
+        $inventory->name = $request->name;
+        $inventory->tonne = $request->tonne;
+        $inventory->weight = $request->weight;
+        $inventory->bags = $request->bags;
+        $inventory->save();
     }
 
     /**

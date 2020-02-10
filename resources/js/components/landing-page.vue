@@ -204,6 +204,7 @@ export default {
         let sumEvacuated = parseInt(this.evacuated.sumEvacuated)
 
         let overallBag = overallWeight - sumEvacuated
+        overallBag = overallBag.toFixed(2)
 
         if (weightSum == 0) {
           return this.arrived.sumArrived = "Nothing In Store"

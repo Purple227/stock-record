@@ -121,7 +121,7 @@ name: "evacuated-sheet",
 				name: this.evacuated.exporterName,
 				tonne: this.evacuated.tonne.toString(),
 				bags: this.evacuated.bags,
-				weight: this.evacuated.weight
+				weight: this.evacuated.weight+"Kg"
 			}).then((response) => {
     			this.evacuated.exporterName = null
     			this.evacuated.tonne = null

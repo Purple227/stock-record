@@ -129,8 +129,13 @@ i
                       </div>
                     </div>
                     <i class="fas fa-trash has-text-info" v-on:click="addActiveClass"></i>
-                  </td>
 
+                    <!-- Edit Section -->
+                    <router-link :to="{name: 'edit-evacuated', params: {id: inventory.id}}" v-bind:style="myStyle">
+                    <i class="fas fa-edit has-text-info" ></i>
+                    </router-link>
+                    <!-- Edit Section -->
+                  </td>
                 </tr>
 
               </tbody>
@@ -184,6 +189,10 @@ i
         dateSelected: null,
       },
 
+      myStyle: {
+       marginLeft: '8%',
+     },
+
   } // Return calibrace close
   }, // data calibrace close
 
@@ -223,7 +232,7 @@ i
       });
     },
 
-bulmaCalendar () {
+    bulmaCalendar () {
 // Initialize all input of type date//
 let calendars = bulmaCalendar.attach('[type="date"]');
 

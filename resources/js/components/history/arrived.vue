@@ -130,7 +130,6 @@ i
                     </div>
                     <i class="fas fa-trash has-text-info" v-on:click="addActiveClass"></i>
 
-
                     <!-- Edit Section -->
                     <router-link :to="{name: 'edit-arrived', params: {id: inventory.id}}" v-bind:style="myStyle">
                     <i class="fas fa-edit has-text-info" ></i>
