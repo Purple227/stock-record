@@ -72,13 +72,13 @@
   <i class="fas fa-history icon has-text-info icon_spacing"></i>
 </router-link>
 
-<router-link :to="{ name: 'user-profile' }" active-class='is-active'>
+<router-link :to="{name: 'user-profile'}" active-class='is-active'>
   <i class="fas fa-users icon has-text-info icon_spacing"></i>
 </router-link>
 
-<span class="icon has-text-info icon_spacing">
-  <i class="fas fa-info-circle "></i>
-</span>
+<router-link :to="{name: 'about'}" active-class='is-active'>
+  <i class="fas fa-info-circle icon has-text-info icon_spacing"></i>
+</router-link>
 
  </div>
 

@@ -6,7 +6,12 @@
 @import "../../sass/partials/_reuse.scss";
 @import "../../sass/partials/_responsive.scss";
 
-
+.button
+{
+	@include tablet_mobile {
+		margin-top: 18px;
+	}
+}
 </style>
 
 <template>

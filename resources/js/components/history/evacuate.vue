@@ -46,7 +46,7 @@ i
     <div class="" v-if="inventories.length == 0">
       <div class="notification is-black" >
         <button class="delete" @click="getInventoryData()"></button>
-        No stocks store on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
+        No stocks evacuated on <strong> {{ dateSelectedEmpty || todayDate | moment("Do MMM YYYY") }} </strong>
       </div>
     </div>
 

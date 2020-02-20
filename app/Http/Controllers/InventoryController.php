@@ -14,7 +14,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::orderBy('id', 'desc')->paginate(4);
+        $inventories = Inventory::orderBy('id', 'desc')->paginate(5);
         return response()->json($inventories);
     }
 

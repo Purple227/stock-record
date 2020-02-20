@@ -7,6 +7,9 @@ import EditEvacuated from './components/modals/edit-evacuated.vue';
 import Register from './components/modals/register.vue';
 import Login from './components/modals/login.vue';
 import UserProfile from './components/user-profile.vue';
+import UserUpdate from './components/modals/update-profile.vue';
+import About from './components/about.vue';
+
 
 const routes = 
 [
@@ -22,6 +25,12 @@ const routes =
     component: History
 },
 
+{ 
+    name:'about',
+    path: 'about',
+    component: About
+},
+
 {
 	name: 'edit-arrived',
 	path: '/history/edit-arrived/:id',
@@ -35,15 +44,21 @@ const routes =
 },
 
 { 
-    name:'*',
-    path: '/404',
-    component: NotFound
+    name:'user-profile',
+    path: 'user-profile',
+    component: UserProfile
 },
 
 { 
-    name:'user-profile',
-    path: 'user',
-    component: UserProfile
+    name:'user-update',
+    path: 'user-update',
+    component: UserUpdate
+},
+
+{ 
+    name:'*',
+    path: '404',
+    component: NotFound
 },
 
 ];

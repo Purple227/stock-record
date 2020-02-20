@@ -79,7 +79,7 @@
   </div>  <!-- Third column tag end -->
 
 </div>  <!-- Columns wrapper -->
-
+<navbar v-if='false' title="blah blaH blah"></navbar>
 </div>
 
 </template>
@@ -89,6 +89,7 @@
 import ArrivedSheetModal from './modals/arrived-sheet.vue'
 import EvacuatedSheetModal from './modals/evacuated-sheet.vue'
 import status from '../mixins/status'
+import Navbar from '../layouts/partials/navbar.vue'
 
 export default {
   name: "landing-page",
@@ -101,6 +102,7 @@ export default {
   {
     'arrived-sheet': ArrivedSheetModal,
     'evacuated-sheet': EvacuatedSheetModal,
+    'navbar': Navbar,
   },
 
   data() {
@@ -130,7 +132,7 @@ export default {
   } // Return calibrace close
   }, // data calibrace close
 
-  mounted() {
+  created() {
     this.arrivedData()
     this.evacuatedData()
   },
@@ -156,9 +158,12 @@ export default {
 
     statusUpdate: function(value) {
       this.status = value
+      if(this.status == true) {
         setTimeout(() => {
           this.$router.go()
         }, 500)
+      }
+
     },
 
   },// method calibrace close
@@ -211,6 +216,9 @@ export default {
         } else if (this.evacuated.sumEvacuated == "No Stock Evacuated") {
           overallWeight = overallWeight.toString()
           overallWeight = overallWeight.split(".")
+          if (overallWeight.length == 1) {
+            overallWeight[1] = 0
+          }
           overallWeight = overallWeight[0] +"Bags"  +" Plus "+ " " + overallWeight[1]+"Kg"
           return this.arrived.sumArrived = overallWeight
         } else if (overallBag > 1) {
@@ -266,8 +274,7 @@ export default {
         let calculateRemainder = totalWeightWithDiscount - calculate
 
         let overallBag = convertToWhole+"Bag"  +" Plus "+ " " +  calculateRemainder+"Kg"
-
-        if (totalBags > 1) {
+        if (totalBags >= 0.1) {
           return this.arrived.todayArrivedSum = overallBag
         } else {
           return this.arrived.todayArrivedSum = "No Stock Added Today"
@@ -292,7 +299,7 @@ export default {
 
         let totalBags = evacuatedSum / oneBag 
 
-        if (totalBags > 1) {
+        if (totalBags >= 1) {
           return this.evacuated.sumEvacuated = totalBags+"Bags"
         } else {
           return this.evacuated.sumEvacuated = "No Stock Evacuated"
@@ -321,7 +328,7 @@ export default {
 
         let totalBags = evacuatedSum / oneBag 
 
-        if (totalBags > 1) {
+        if (totalBags >= 1) {
           return this.evacuated.sumEvacuated = totalBags+"Bags"
         } else {
           return this.evacuated.sumEvacuated = "No Stock Evacuated Today"

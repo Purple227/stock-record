@@ -112,7 +112,7 @@ export default {
 		}
 	},
 
-	mounted() {
+	created() {
 		this.getEditedData()
 	},
 
@@ -120,6 +120,7 @@ export default {
 
 		historyHome() {
 			this.$router.push({name:'history'})
+			//this.$router.push('/history')
 		},
 
 		getEditedData() {

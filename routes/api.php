@@ -21,6 +21,7 @@ Route::get('home/evacuated', 'InventoryEvacuationController@getBag');
 
 Route::post('register', 'Auth\RegisterController@register');
 
+
 Route::apiResources([
     'arrived' => 'InventoryController',
     'evacuated' => 'InventoryEvacuationController'

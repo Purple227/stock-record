@@ -20,131 +20,114 @@
 
 <body>
 
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Login
-                </h1>
-            </div>
-        </div>
-    </section>
-
-    <div class="columns is-marginless is-centered">
-        <div class="column is-5">
+        <div class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title has-text-centered"> Update  profile </p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          
+          <form action="{{ route('update', 1) }}" method="PUT" enctype="multipart/form-data" > <!-- Form tag open -->
             <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Login</p>
-                </header>
+                <!--header class="card-header">
+                    <p class="card-header-title">
+                    //Content
+                </p>
+              </header-->
 
-                <div class="card-content">
-                    <form class="login-form" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">E-Mail Address</label>
-                            </div>
-
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="email" type="email" name="email"
-                                               value="{{ old('email') }}" required autofocus>
-                                    </p>
-
-                                    @if ($errors->has('email'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('email') }}
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <label class="label">Password</label>
-                            </div>
-
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <input class="input" id="password" type="password" name="password" required>
-                                    </p>
-
-                                    @if ($errors->has('password'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('password') }}
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="field is-horizontal">
-                            <div class="field-label"></div>
-
-                            <div class="field-body">
-                                <div class="field">
-                                    <p class="control">
-                                        <label class="checkbox">
-                                            <input type="checkbox"
-                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                        </label>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="field is-horizontal">
-                            <div class="field-label"></div>
-
-                            <div class="field-body">
-                                <div class="field is-grouped">
-                                    <div class="control">
-                                        <button type="submit" class="button is-primary">Login</button>
-                                    </div>
-
-                                    <div class="control">
-                                        <a href="{{ route('password.request') }}">
-                                            Forgot Your Password?
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+              <div class="card-content">
+                <div class="field">
+                  <div class="field-label"></div>
+                  <div class="field-body">
+                    <div class="field is-expanded">
+                      <div class="field has-addons">
+                        <p class="control">
+                          <a class="button is-static is-bold has-text-black">
+                            Name
+                          </a>
+                        </p>
+                        <p class="control is-expanded has-icons-right">
+                          <input class="input" type="text" name="name" autofocus="" required>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="field">
+                  <div class="field-label"></div>
+                  <div class="field-body">
+                    <div class="field is-expanded">
+                      <div class="field has-addons">
+                        <p class="control">
+                          <a class="button is-static is-bold has-text-black">
+                            Email
+                          </a>
+                        </p>
+                        <p class="control is-expanded has-icons-right">
+                          <input class="input" type="email" name="email" autofocus="" required>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file has-name is-fullwidth">
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="image">
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label">
+                        Choose a file…
+                      </span>
+                    </span>
+                    <span class="file-name">
+                      
+                    </span>
+                  </label>
+                </div>
+
+                <div class="field" style="margin-top: 18px;">
+                  <div class="field-label"></div>
+                  <div class="field-body">
+                    <div class="field is-expanded">
+                      <div class="field has-addons">
+                        <p class="control">
+                          <a class="button is-static is-bold has-text-black">
+                            Title
+                          </a>
+                        </p>
+                        <p class="control is-expanded has-icons-right">
+                          <input class="input" type="text" name="title" autofocus="" required>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="field has-icons-right">
+                  <label class="label">Description</label>
+                  <div class="control">
+                    <textarea class="textarea" v-model="update.description" required> </textarea>
+                  </div>
+                </div>
+
+              </div>
+              <footer class="card-footer">
+                <button  class="card-footer-item has-background-info has-text-white" type="submit"> <i class="fas fa-save fa-lg  has-text-white"> Update </i>  </button>
+
+                <a class="card-footer-item has-background-info has-text-white"> <i class="fas fa-times has-text-white"> Cancel </i> </a>
+              </footer>
             </div>
-        </div>
+          </form>
+        </section>
+      </div>
     </div>
-
-
-
-
-@if(Auth::check() )
-
-<li class="nav-item dropdown ">
-<a class="nav-link dropdown-toggle " href=" " id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-{{ Auth::user()->name }}
-</a>
-<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-
-<a class="dropdown-item" href="{{ route('logout') }}"
-onclick="event.preventDefault();
-document.getElementById('logout-form').submit();">
-{{ __('Logout') }}
-</a>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-@csrf
-</form>
-@endif
-
-
-
-
 
 
 

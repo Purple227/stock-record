@@ -19,7 +19,7 @@
 			<div class="modal-card">
 				<header class="modal-card-head">
 					<p class="modal-card-title has-text-centered"> Update {{editedData.name}} Stocks </p>
-					<button class="delete" aria-label="close"></button>
+					<button class="delete" aria-label="close" v-on:click="historyHome"></button>
 				</header>
 				<section class="modal-card-body">
 				<form v-on:submit.prevent="updateEvacuatedData"> <!-- Form tag open -->
@@ -63,10 +63,10 @@
 								</table>
 
 						<footer class="card-footer sticky">
-							<button class="card-footer-item has-background-info has-text-white " value="submit"> <i class="fas fa-save fa-lg  has-text-white"> Save </i> </button>
+							<button class="card-footer-item has-background-info has-text-white " type="submit"> <i class="fas fa-save fa-lg  has-text-white"> Save </i> </button>
 
 
-							<a class="card-footer-item has-background-info has-text-white" v-on:click="addActiveClass"> <i class="fas fa-times has-text-white"> Cancel </i> </a>
+							<a class="card-footer-item has-background-info has-text-white" v-on:click="historyHome"> <i class="fas fa-times has-text-white"> Cancel </i> </a>
 						</footer>
 					</form>
 				</section>
@@ -101,7 +101,7 @@ export default {
 		}
 	},
 
-	mounted() {
+	created() {
 		this.getEditedData()
 	},
 

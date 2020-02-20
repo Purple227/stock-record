@@ -85,14 +85,14 @@ export default
 		}
 	},
 
-	mounted() {
+	created() {
 		this.loginGuard()
 	},
 
 	methods: {
 
 		loginGuard() {
-			let api_url = "guard"
+			let api_url = "user"
 			this.axios
 			.get(api_url).then((response) => {
 				this.guard = response.data

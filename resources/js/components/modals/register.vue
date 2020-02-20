@@ -33,6 +33,7 @@
               <ul>
               <li>{{register.errors.email[0]}}</li>
               <li>{{register.errors.password[0]}}</li>
+              <li>{{register.errors.name[0]}}</li>
             </ul>
             </div>
           </div>
@@ -191,7 +192,8 @@ export default{
     register: {
       name: {
         required,
-        maxLength: maxLength(255)
+        minLength: minLength(3),
+        maxLength: maxLength(20)
       },
       email: {
         required,
