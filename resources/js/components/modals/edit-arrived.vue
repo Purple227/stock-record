@@ -19,7 +19,7 @@
 		<div class="modal-card">
 			<header class="modal-card-head">
 				<p class="modal-card-title has-text-centered"> Update {{editedData.name}} Stocks  </p>
-				<button class="delete" aria-label="close" @click="historyHome"></button>
+				<button class="delete" aria-label="close" @click="cancelStatus"></button>
 			</header>
 			<section class="modal-card-body">
 			<form v-on:submit.prevent="updateArrivedData"> <!-- Form tag open -->
@@ -76,7 +76,7 @@
 </div>
 <footer class="card-footer">
 	<button  class="card-footer-item has-background-info has-text-white"> <i class="fas fa-save fa-lg  has-text-white"> Update </i>  </button>
-	<a class="card-footer-item has-background-info has-text-white"> <i class="fas fa-times has-text-white" @click="historyHome"> Cancel </i> </a>
+	<a class="card-footer-item has-background-info has-text-white" @click="cancelStatus"> <i class="fas fa-times has-text-white" > Cancel </i> </a>
 </footer>
 </div>
 
@@ -90,6 +90,7 @@
 
 </template>
 
+
 <script>
 import classToggler from '../../mixins/classToggler'
 
@@ -100,6 +101,8 @@ export default {
 	classToggler
 	],
 
+	props: ['contentId'],
+
 	data() {
 		return{
 
@@ -109,6 +112,9 @@ export default {
 				bags: null,
 				name: null,
 			},
+
+			getContentId:this.contentId,
+			edit: null,
 		}
 	},
 
@@ -118,14 +124,14 @@ export default {
 
 	methods: {
 
-		historyHome() {
-			this.$router.push({name:'history'})
-			//this.$router.push('/history')
-		},
+    cancelStatus: function(value, status) {
+      this.status = false
+      this.edit = false
+      this.$emit('editStatus', this.edit, this.status)
+    },
 
 		getEditedData() {
-			let contentId= this.$route.params.id;
-			let api = '/api/arrived/' + contentId
+			let api = '/api/arrived/' + this.getContentId
 			this.axios
 			.get(api).then((response) => {
 				this.editedData.weight = parseInt(response.data.total_weight)
@@ -134,39 +140,40 @@ export default {
 			})
 		},
 
-        updateArrivedData() {
-          let contentId= this.$route.params.id;
-          let api = '/api/arrived/' + contentId;
-		  let weight = this.editedData.weight+"Kg"
-		  let discount = this.editedData.discount+"Kg"
-          this.axios.put(api, {
-          	broker: this.editedData.name,
-          	total_weight: weight,
-          	total_discount: discount,
-          	total_bags: this.editedData.bags
-          }).then((response) => {
-            this.$router.push({name: 'history'});
-          });
-        }
+		updateArrivedData() {
+			let api = '/api/arrived/' + this.getContentId;
+			let weight = this.editedData.weight+"Kg"
+			let discount = this.editedData.discount+"Kg"
+			this.axios.put(api, {
+				broker: this.editedData.name,
+				total_weight: weight,
+				total_discount: discount,
+				total_bags: this.editedData.bags
+			}).then((response) => {
+				this.status = true
+				this.edit = false
+                this.$emit('editStatus', this.edit, this.status)
+			});
+		}
 
 	},// method calibrace closes here 
 
-    computed: {
+	computed: {
 
-    	getResult: function() {
-    	let oneBag = 64
+		getResult: function() {
+			let oneBag = 64
 
-        let totalBags = parseInt((this.editedData.weight - this.editedData.discount) / oneBag)
-       
-        let calculate = oneBag * totalBags
+			let totalBags = parseInt((this.editedData.weight - this.editedData.discount) / oneBag)
 
-        let totalWeightWithDiscount = this.editedData.weight - this.editedData.discount
+			let calculate = oneBag * totalBags
 
-        let calculateRemainder = totalWeightWithDiscount - calculate
+			let totalWeightWithDiscount = this.editedData.weight - this.editedData.discount
 
-		return this.editedData.bags = totalBags+"Bags"  +" Plus "+ " " +  calculateRemainder+"Kg"
-    	} 
-    },
+			let calculateRemainder = totalWeightWithDiscount - calculate
+
+			return this.editedData.bags = totalBags+"Bags"  +" Plus "+ " " +  calculateRemainder+"Kg"
+		} 
+	},
 
 }
 

@@ -111,8 +111,7 @@ export default {
 
     status: null,
     workSheet: false,
-    test: null,
-
+    
     arrived: {
       arrayArrived: [],
       sumArrived: null,
@@ -160,7 +159,7 @@ export default {
       this.status = value
       if(this.status == true) {
         setTimeout(() => {
-          this.$router.go()
+          this.$router.push({path: '/'})
         }, 500)
       }
 
@@ -209,7 +208,7 @@ export default {
         let sumEvacuated = parseInt(this.evacuated.sumEvacuated)
 
         let overallBag = overallWeight - sumEvacuated
-        overallBag = overallBag.toFixed(2)
+        overallBag = overallBag//.toFixed(2)
 
         if (weightSum == 0) {
           return this.arrived.sumArrived = "Nothing In Store"

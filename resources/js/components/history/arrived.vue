@@ -15,7 +15,7 @@
   min-height: 50vh;
 }
 
-i
+i, .fas
   {
   cursor: pointer;
 }
@@ -32,7 +32,7 @@ i
     <div class="" v-if="status">
       <div class="notification is-black" >
         <button class="delete" @click="status = null "></button>
-        Task deleted succesfully
+        Task succesfully
       </div>
     </div>
 
@@ -131,9 +131,8 @@ i
                     <i class="fas fa-trash has-text-info" v-on:click="addActiveClass"></i>
 
                     <!-- Edit Section -->
-                    <router-link :to="{name: 'edit-arrived', params: {id: inventory.id}}" v-bind:style="myStyle">
-                    <i class="fas fa-edit has-text-info" ></i>
-                    </router-link>
+                    <extra-security :get-id="inventory.id" @setStatus="getStatus" v-bind:style="myStyle" class='is-inline'> </extra-security>
+                    <edit :content-id='contentId' @editStatus="editMethod" v-if='edit'> </edit>
                     <!-- Edit Section -->
                   </td>
 
@@ -163,7 +162,8 @@ i
   import classToggler from '../../mixins/classToggler'
   import bulmaCalendar from 'bulma-calendar/dist/js/bulma-calendar.min.js'
   import status from '../../mixins/status'
-  import EditArrived from '../modals/edit-arrived.vue'
+  import SecurityModal from '../modals/extra-security.vue'
+  import Edit from '../modals/edit-arrived.vue'
 
 
   export default {
@@ -174,7 +174,8 @@ i
     ],
 
     components: {
-      'edit-arrived': EditArrived
+      'extra-security': SecurityModal,
+      'edit': Edit
     },
 
     data() {
@@ -185,6 +186,8 @@ i
       dateSelectedEmpty: null,
       todayDate: new Date(),
       inventories: [],
+      contentId: null,
+      edit: false,
 
     myStyle: {
      marginLeft: '8%',
@@ -221,6 +224,24 @@ i
         let previousPageUrl = response.data.prev_page_url
         this.pagination.previousPageUrl =  previousPageUrl ? previousPageUrl.slice(21) : null
       })
+    },
+
+    getStatus(value, arrayIndex) {
+      this.status = value
+      if (this.status == true) {
+        this.contentId = arrayIndex
+        this.edit = true
+      }
+    },
+
+    editMethod(value, status) {
+      this.edit = value
+      this.status = status
+      if (this.status == true) {
+        setTimeout(() => {
+          this.$router.push({name: 'history'})
+        }, 500)
+      }
     },
 
     deleteData(id, index) {

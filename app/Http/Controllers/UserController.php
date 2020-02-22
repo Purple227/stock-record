@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -24,6 +26,7 @@ class UserController extends Controller
         return response()->json($user_login);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,8 +44,16 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+
+        $hashedPassword = Auth::user()->password;
+        if (Hash::check($request->password, $hashedPassword)) {
+            $bridge = true;
+        } else {
+            $bridge = false;
+        }
+
+        return response()->json($bridge);
     }
 
     /**
