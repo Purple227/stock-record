@@ -159,7 +159,7 @@ export default {
       this.status = value
       if(this.status == true) {
         setTimeout(() => {
-          this.$router.push({path: '/'})
+          this.$router.go()
         }, 500)
       }
 

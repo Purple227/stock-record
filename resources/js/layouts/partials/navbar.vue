@@ -100,9 +100,9 @@ data() {
   }
 },
 
-  created() {
-    this.getUserProfile()
-  },
+created() {
+  this.getUserProfile()
+},
 
 methods: {
 
@@ -110,21 +110,19 @@ methods: {
     let api = "logout"
     this.axios.post(api, {
     }).then((response) => {
-      this.$router.go()
-            //will make a decision as i progress
-            this.$router.go()
-          }).catch(function (error) {
-            console.log(error)
-          });
-        },
+      history.go();
+    }).catch(function (error) {
+      console.log(error)
+    });
+  },
 
-        getUserProfile() {
-          let api_url = "user/authId"
-          this.axios
-          .get(api_url).then((response) => {
-            this.imagePath = response.data.image
-          })
-        },
+  getUserProfile() {
+    let api_url = "user/authId"
+    this.axios
+    .get(api_url).then((response) => {
+      this.imagePath = response.data.image
+    })
+  },
 
       },// method calibrace closes here
 

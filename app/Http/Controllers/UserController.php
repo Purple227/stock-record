@@ -98,16 +98,15 @@ class UserController extends Controller
         'description' => ['required', 'string', 'max:400', 'min:150'],
         ]);
 
-        if (isset($request->file)) {
+        if ( $request->hasFile('file') ) {
             Storage::deleteDirectory('public/profile');
             $path = Storage::disk('public')->putFile('profile',$request->file('file'));
+            $user->image = $path;
         }
         
-
         $user->name = $request->name;
         $user->title = $request->title;
         $user->description = $request->description;
-        $user->image = $path;
         $user->save();
     }
 

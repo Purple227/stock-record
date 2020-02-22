@@ -229,6 +229,7 @@ i, .fas
     getStatus(value, arrayIndex) {
       this.status = value
       if (this.status == true) {
+        this.status = null
         this.contentId = arrayIndex
         this.edit = true
       }
@@ -239,7 +240,7 @@ i, .fas
       this.status = status
       if (this.status == true) {
         setTimeout(() => {
-          this.$router.push({name: 'history'})
+          this.$router.push({name:'history'})
         }, 500)
       }
     },
