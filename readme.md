@@ -6,22 +6,24 @@ Stock inventory app is an application that take record in and out of a stock sto
 
 ## Below is a screen-shot of the application UI
 
-![Philadelphia's Magic Gardens. This place was so cool!](/public/images/screen shot/home.png "Philadelphia's Magic Gardens")
+![](/public/images/screenshot/home.png)
 
 
-<img src=" public/images/screen shot/home-1.png" width="400" height="300" style="margin-left: 18px">
+<img src=" public/images/screenshot/home.png"  width="400" height="300"/>
 
-<br>
-
-<img src=" public/images/screen shot/arrive.png" width="400" height="300">
-
-<img src=" public/images/screen shot/evacuate.png"  width="400" height="300" style="margin-left: 18px">
+<img src=" public/images/screenshot/home-1.png" width="400" height="300" style="margin-left: 18px">
 
 <br>
 
-<img src=" public/images/screen shot/arrived-table.png" alt="Girl in a jacket" width="400" height="300">
+<img src=" public/images/screenshot/arrive.png" width="400" height="300">
 
-<img src=" public/images/screen shot/evacuate-table.png" alt="Girl in a jacket" width="400" height="300" style="margin-left: 18px">
+<img src=" public/images/screenshot/evacuate.png"  width="400" height="300" style="margin-left: 18px">
+
+<br>
+
+<img src=" public/images/screenshot/arrived-table.png" alt="Girl in a jacket" width="400" height="300">
+
+<img src=" public/images/screenshot/evacuate-table.png" alt="Girl in a jacket" width="400" height="300" style="margin-left: 18px">
 
 ## How To Install my App
 
