@@ -6,7 +6,8 @@ Stock inventory app is an application that take record in and out of a stock sto
 
 ## Below is a screen-shot of the application UI
 
-<img src=" public/images/screen shot/HOME.png"  width="400" height="300">
+![Philadelphia's Magic Gardens. This place was so cool!](/public/images/screen shot/home.png "Philadelphia's Magic Gardens")
+
 
 <img src=" public/images/screen shot/home-1.png" width="400" height="300" style="margin-left: 18px">
 
