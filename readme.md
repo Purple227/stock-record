@@ -8,22 +8,16 @@ Stock inventory app is an application that take record in and out of a stock sto
 
 ![](/public/images/screenshot/home.png)
 
+![](/public/images/screenshot/home-1.png)
 
-<img src=" public/images/screenshot/home.png"  width="400" height="300"/>
+![](/public/images/screenshot/arrive.png)
 
-<img src=" public/images/screenshot/home-1.png" width="400" height="300" style="margin-left: 18px">
+![](/public/images/screenshot/evacuate.png)
 
-<br>
+![](/public/images/screenshot/arrived-table.png)
 
-<img src=" public/images/screenshot/arrive.png" width="400" height="300">
+![](/public/images/screenshot/evacuate-table.png)
 
-<img src=" public/images/screenshot/evacuate.png"  width="400" height="300" style="margin-left: 18px">
-
-<br>
-
-<img src=" public/images/screenshot/arrived-table.png" alt="Girl in a jacket" width="400" height="300">
-
-<img src=" public/images/screenshot/evacuate-table.png" alt="Girl in a jacket" width="400" height="300" style="margin-left: 18px">
 
 ## How To Install my App
 
