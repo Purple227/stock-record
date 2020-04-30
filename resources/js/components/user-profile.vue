@@ -41,7 +41,7 @@
           <!--p class="title">Middle tile</p-->
           <p class="subtitle"> {{userData.name}}</p>
           <figure class="image is-4by3">
-            <img :src="getImagePath" :alt="userData.name">
+            <img src="/images/profile_pic.jpg" :alt="userData.name">
           </figure>
         </article>
       </div>

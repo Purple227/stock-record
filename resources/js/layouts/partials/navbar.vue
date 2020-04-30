@@ -47,7 +47,7 @@
         <div class="dropdown-trigger">
           <div>
             <figure class="image is-48x48">
-              <img class="is-rounded" :src="getImagePath" alt='drop-down'>
+              <img class="is-rounded" src="/images/profile_pic.jpg" alt='drop-down'>
             </figure>
           </div>
         </div>
